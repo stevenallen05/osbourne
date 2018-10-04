@@ -14,15 +14,9 @@ module Osbourne
     end
 
     def ensure_queue
-      Osbourne.cache.fetch("existing_queue_arn_for_#{name}") do
-        sns.create_queue(name: name).queue_arn
+      Osbourne.cache.fetch("arn_for_#{name}") do
+        sqs.create_queue(name: name).queue_arn
       end
-    end
-
-    private
-
-    def subscriptions_cache_key
-      "existing_sqs_subscriptions_for_#{name}"
     end
   end
 end
