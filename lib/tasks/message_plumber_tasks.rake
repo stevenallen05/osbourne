@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 # desc "Explaining what the task does"
-# task :message_plumber do
+# task :osbourne do
 #   # Task goes here
 # end

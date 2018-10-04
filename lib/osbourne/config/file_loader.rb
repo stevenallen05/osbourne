@@ -4,7 +4,7 @@ require "yaml"
 require "erb"
 require "fileutils"
 
-module MessagePlumber
+module Osbourne
   module Config
     module FileLoader
       def self.load(cfile, environment="development")
@@ -17,8 +17,8 @@ module MessagePlumber
         publisher_opts = opts.merge(opts.delete("publisher") || {})
         subscriber_opts = opts.merge(opts.delete("subscriber") || {})
 
-        MessagePlumber.subscriber_config = subscriber_opts
-        MessagePlumber.publisher_config = publisher_opts
+        Osbourne.subscriber_config = subscriber_opts
+        Osbourne.publisher_config = publisher_opts
         true
       end
     end

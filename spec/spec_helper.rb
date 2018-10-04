@@ -3,13 +3,13 @@
 require "bundler/setup"
 Bundler.setup
 
-require "message_plumber" # and any other gems you need
+require "osbourne" # and any other gems you need
 
 require "simplecov"
 SimpleCov.start
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
-require "message_plumber"
+require "osbourne"
 
 require "rails"
 require "redis"
@@ -63,5 +63,5 @@ RSpec.configure do |config|
 
   Kernel.srand config.seed
 
-  MessagePlumber.cache = ActiveSupport::Cache::NullStore.new
+  Osbourne.cache = ActiveSupport::Cache::NullStore.new
 end

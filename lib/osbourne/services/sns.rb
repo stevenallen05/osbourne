@@ -2,15 +2,15 @@
 
 require "aws-sdk-sns"
 
-module MessagePlumber
+module Osbourne
   module Services
     module SNS
       def sns
-        @sns ||= MessagePlumber.sns_client
+        @sns ||= Osbourne.sns_client
       end
 
       def sns=(client)
-        MessagePlumber.sns_client = client
+        Osbourne.sns_client = client
       end
     end
   end

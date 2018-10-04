@@ -1,4 +1,4 @@
-# MessagePlumber
+# Osbourne
 Short description and motivation.
 
 ## Usage
@@ -8,7 +8,7 @@ How to use my plugin.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'message_plumber'
+gem 'osbourne'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ $ bundle
 
 Or install it yourself as:
 ```bash
-$ gem install message_plumber
+$ gem install osbourne
 ```
 
 ## Contributing
