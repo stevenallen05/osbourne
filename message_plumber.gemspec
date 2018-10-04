@@ -23,10 +23,10 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 5"
   s.add_dependency "thor"
 
+  s.add_development_dependency "awesome_print"
   s.add_development_dependency "bundler", "~> 1.8"
-  s.add_development_dependency "connection_pool"
-  s.add_development_dependency "dalli"
-  s.add_development_dependency "memcache_mock"
+  s.add_development_dependency "guard"
+  s.add_development_dependency "guard-rspec"
   s.add_development_dependency "mock_redis"
   s.add_development_dependency "pry-byebug"
   s.add_development_dependency "rake", "~> 10.0"

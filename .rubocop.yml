@@ -5,12 +5,12 @@ inherit_from: .rubocop_todo.yml
 AllCops:
   Exclude:
     - 'vendor/**/*'
+    - 'spec/test_app/**/*'
     - 'spec/fixtures/**/*'
     - 'tmp/**/*'
     - 'db/**/*'
     - 'Gemfile.lock'
     - 'Guardfile'
-    - 'node_modules/**/*'
     - 'bin/*'
     - 'config/**/*'
     - 'spec/rails_helper.rb'
@@ -78,11 +78,6 @@ Lint/AssignmentInCondition:
 # A specialized exception class will take one or more arguments and construct the message from it.
 # So both variants make sense. 
 Style/RaiseArgs:
-  Enabled: false
-
-# Indenting the chained dots beneath each other is not supported by this cop,
-# see https://github.com/bbatsov/rubocop/issues/1633
-Layout/MultilineOperationIndentation:
   Enabled: false
 
 # Fail is an alias of raise. Avoid aliases, it's more cognitive load for no gain.
