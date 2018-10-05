@@ -5,6 +5,7 @@ require "osbourne/services/sns"
 require "osbourne/services/sqs"
 require "osbourne/topic"
 require "osbourne/queue"
+require "osbourne/subscription"
 
 module Osbourne
   class << self

@@ -3,16 +3,12 @@
 require "spec_helper"
 
 RSpec.describe Osbourne::Queue, type: :model do
-  subject { described_class.new(queue_name) }
+  include_context "mock sqs"
+  subject(:queue) { described_class.new(queue_name) }
 
-  let(:sqs_client) { instance_double("Aws::SQS::Client") }
-  let(:queue_arn) { OpenStruct.new(queue_arn: "arn:aws:sqs:us-east-2:123456789012:#{queue_name}") }
-  let(:queue_name) { "queue_name" }
+  let(:queue_name) { "a_queue" }
 
-  before {
-    allow(sqs_client).to receive(:create_queue).and_return(queue_arn)
-    Osbourne.sqs_client = sqs_client
-  }
-
-  it { ap subject }
+  it "creates the queue and retrieves the ARN" do
+    expect(queue.arn).to be_a(String)
+  end
 end
