@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+Osbourne.configure do |config|
+  # Defaults to a null cache. Uncomment to use the Rails cache,
+  # or substitute any rails-cache compatible adapter of your choice
+  # config.cache = Rails.cache
+
+  # Dead letter queues are used to store messages that fail processing for some reason
+  # They are enabled by default, uncomment this line to disable them.
+  # config.dead_letter = false
+end

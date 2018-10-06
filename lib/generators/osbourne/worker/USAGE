@@ -1,0 +1,12 @@
+Description:
+    Generates a fan-out worker that ensures the given queues, topics, and subscriptions are instantiated
+
+Example:
+    rails generate queue_worker WorkerName some_message_topic
+
+    This will create:
+        app/workers/<name>_worker.rb
+
+    `topic` will be the message topic that the queue will listen to. 
+    For example, `Messaging::Deliver.send("some_message_topic", 'stuff')` would send to topic `some_message_topic`
+    

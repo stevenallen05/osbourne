@@ -17,6 +17,6 @@ RSpec.shared_context "mock sns", shared_context: :metadata do
     end
     Osbourne.sns_client = sns_client
   }
-end
 
-# subscribe(topic_arn: topic_arn, protocol: "sqs", endpoint: arn)
+  after { Osbourne.sns_client = nil }
+end

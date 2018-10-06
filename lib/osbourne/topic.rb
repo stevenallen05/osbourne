@@ -19,6 +19,10 @@ module Osbourne
       end
     end
 
+    def publish(message)
+      sns.publish(topic_arn: arn, message: message.is_a?(String) ? message : message.to_json)
+    end
+
     private
 
     def ensure_topic

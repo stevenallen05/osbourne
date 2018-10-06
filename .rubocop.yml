@@ -52,6 +52,9 @@ Style/HashSyntax:
 Style/FormatString:
   EnforcedStyle: percent
 
+Style/ClassVars:
+  Enabled: false
+
 Style/CollectionMethods:
   Enabled: true
   PreferredMethods:

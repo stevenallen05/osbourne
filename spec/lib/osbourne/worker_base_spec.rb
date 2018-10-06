@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+require "spec_helper"
+
+class TestWorker < Osbourne::WorkerBase
+  worker_config topics: %w[test_topic_1 test_topic_2]
+end
+
+RSpec.describe Osbourne::WorkerBase, type: :model do
+  # include_context "mock sqs"
+  # include_context "mock sns"
+
+  subject(:test_worker) { TestWorker.new }
+
+  it { expect(test_worker.subscriptions.count).to eq 2 }
+  it { ap test_worker.subscriptions }
+end

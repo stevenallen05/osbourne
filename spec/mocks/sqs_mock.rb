@@ -17,4 +17,6 @@ RSpec.shared_context "mock sqs", shared_context: :metadata do
 
     Osbourne.sqs_client = sqs_client
   }
+
+  after { Osbourne.sqs_client = nil }
 end
