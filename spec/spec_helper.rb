@@ -7,7 +7,9 @@ require "simplecov"
 require "simplecov-console"
 (SimpleCov.formatter = SimpleCov::Formatter::Console) if ENV["CI"]
 
-SimpleCov.start
+SimpleCov.start do
+  add_filter "spec/"
+end
 
 require "osbourne"
 require "osbourne/services/sns"
