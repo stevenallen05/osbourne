@@ -63,5 +63,5 @@ RSpec.configure do |config|
 
   Kernel.srand config.seed
 
-  Osbourne.cache = ActiveSupport::Cache::NullStore.new
+  Osbourne.config.cache = ActiveSupport::Cache::NullStore.new
 end

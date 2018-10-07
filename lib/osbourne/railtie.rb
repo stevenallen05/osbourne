@@ -13,6 +13,8 @@ module Osbourne
       %w[config/osbourne.yml.erb config/osbourne.yml].find do |filename|
         Osbourne::Config::FileLoader.load(filename, env)
       end
+
+      Osbourne.provision_worker_queues
     end
   end
 end

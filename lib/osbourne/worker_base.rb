@@ -19,14 +19,42 @@ module Osbourne
 
     class << self
       attr_accessor :config
+
+      def descendants
+        ObjectSpace.each_object(Class).select {|klass| klass < self }
+      end
+    end
+
+    def max_recieve_count
+      Osbourne.max_recieve_count
+    end
+
+    def dead_letter_queue_name
+      "#{config[:queue_name]}-dead-letter"
+    end
+
+    def dead_letter_queue
+      @dead_letter_queue ||= Queue.new(dead_letter_queue_name)
     end
 
     private
+
+    def redrive_policy
+      {maxReceiveCount:     "5",
+       deadLetterTargetArn: dead_letter_queue.arn}.to_json
+    end
+
+    def register_dead_letter_queue
+      return unless Osbourne.config.dead_letter
+
+      queue.redrive(redrive_policy)
+    end
 
     def register
       self.topics = config[:topic_names].map {|tn| Topic.new(tn) }
       self.queue = Queue.new(config[:queue_name])
       self.subscriptions = topics.map {|t| Subscription.new(t, queue) }
+      register_dead_letter_queue
     end
 
     class << self

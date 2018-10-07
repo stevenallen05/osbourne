@@ -16,6 +16,14 @@ module Osbourne
       def dead_letter
         config.dead_letter ||= true
       end
+
+      def max_recieve_count
+        config.max_recieve_count.to_s ||= "5"
+      end
+
+      def logger
+        config.logger ||= Logger.new(STDOUT)
+      end
     end
   end
 end

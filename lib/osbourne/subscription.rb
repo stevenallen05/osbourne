@@ -11,14 +11,14 @@ module Osbourne
     end
 
     def arn
-      @arn ||= subscribe.subscription_arn
+      @arn ||= subscribe
     end
 
     private
 
     def subscribe
       Osbourne.cache.fetch("osbourne_sub_t_#{topic.name}_q_#{queue.name}") do
-        sns.subscribe(topic_arn: topic.arn, protocol: "sqs", endpoint: queue.arn)
+        sns.subscribe(topic_arn: topic.arn, protocol: "sqs", endpoint: queue.arn).subscription_arn
       end
     end
   end

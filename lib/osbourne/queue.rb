@@ -17,11 +17,16 @@ module Osbourne
       @arn ||= get_attributes["QueueArn"]
     end
 
+    def redrive(redrive_policy)
+      sqs.set_queue_attributes(queue_url: url, attributes: redrive_policy)
+    end
+
     private
 
     def ensure_queue
+      Osbourne.logger.debug "Ensuring queue `#{name}` exists"
       Osbourne.cache.fetch("osbourne_url_for_#{name}") do
-        sqs.create_queue(name: name).queue_url
+        sqs.create_queue(queue_name: name).queue_url
       end
     end
 

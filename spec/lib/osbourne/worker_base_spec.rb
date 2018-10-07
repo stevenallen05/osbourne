@@ -7,11 +7,11 @@ class TestWorker < Osbourne::WorkerBase
 end
 
 RSpec.describe Osbourne::WorkerBase, type: :model do
-  # include_context "mock sqs"
-  # include_context "mock sns"
+  include_context "mock sqs"
+  include_context "mock sns"
 
   subject(:test_worker) { TestWorker.new }
 
   it { expect(test_worker.subscriptions.count).to eq 2 }
-  it { ap test_worker.subscriptions }
+  it { expect(Osbourne::WorkerBase.descendants).to contain_exactly TestWorker }
 end
