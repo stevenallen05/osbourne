@@ -14,13 +14,13 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/"
   s.summary     = "A simple implementation of the fan-out pubsub pattern using SQS & SNS for Rails"
   s.license     = "GPL-3.0"
+  s.executables = %w[osbourne]
+  s.files = Dir["{app,config,bin,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
   s.description = <<~HEREDOC
     This is a simple implementation of the fan-out pubsub pattern for Rails, using SQS & SNS as the message broker.
     Includes a generator & runner for workers, as well as built-in provisioning for topics, subscriptions,
     qeues, and dead-letter queues
   HEREDOC
-
-  s.files = Dir["{app,config,bin,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "aws-sdk", "~> 3"
   s.add_dependency "aws-sdk-sns", "~> 1"

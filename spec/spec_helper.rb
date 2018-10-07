@@ -12,8 +12,8 @@ $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "osbourne"
 
 require "rails"
-require "redis"
-require "mock_redis"
+# require "redis"
+# require "mock_redis"
 require "pry-byebug"
 require "securerandom"
 require "awesome_print"

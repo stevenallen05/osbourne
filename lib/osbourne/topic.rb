@@ -13,11 +13,11 @@ module Osbourne
       @arn ||= ensure_topic
     end
 
-    def subscribe(queue)
-      Osbourne.cache.fetch("osbourne_sub_t_#{name}_q_#{queue.name}") do
-        sns.subscribe(topic_arn: arn, protocol: "sqs", endpoint: queue.arn)
-      end
-    end
+    # def subscribe(queue)
+    #   Osbourne.cache.fetch("osbourne_sub_t_#{name}_q_#{queue.name}") do
+    #     sns.subscribe(topic_arn: arn, protocol: "sqs", endpoint: queue.arn)
+    #   end
+    # end
 
     def publish(message)
       Osbourne.logger.info "[PUB] TOPIC: `#{name}` MESSAGE: `#{message}`"

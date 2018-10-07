@@ -9,11 +9,15 @@ require "osbourne/subscription"
 require "osbourne/config/shared_configs"
 require "osbourne/worker_base"
 require "osbourne/services/queue_provisioner"
+require "osbourne/launcher"
+require "osbourne/message"
+require "osbourne/existing_subscriptions"
 
 module Osbourne
   class << self
     include Osbourne::Config::SharedConfigs
     include Osbourne::Services::QueueProvisioner
+    include Osbourne::ExistingSubscriptions
     attr_writer :sns_client, :sqs_client
 
     def sns_client

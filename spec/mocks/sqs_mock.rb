@@ -15,6 +15,10 @@ RSpec.shared_context "mock sqs", shared_context: :metadata do
       OpenStruct.new(attributes: {"QueueArn": "arn:aws:sqs:us-east-2:123456789012:some_queue_arn"}.stringify_keys)
     end
 
+    allow(sqs_client).to receive(:set_queue_attributes).with(include(attributes: anything,
+                                                                     queue_url:  anything)) do |_args|
+      OpenStruct.new(attributes: {"QueueArn": "arn:aws:sqs:us-east-2:123456789012:some_queue_arn"}.stringify_keys)
+    end
     Osbourne.sqs_client = sqs_client
   }
 

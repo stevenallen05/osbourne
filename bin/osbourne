@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+
+require 'thor'
+
+require 'rails'
+require File.expand_path('config/environment.rb')
+
+require_relative 'cli/base'
+require_relative '../lib/osbourne/runner'
+
+module Osbourne
+  module CLI
+    class Runner < Thor
+      default_task :start
+      desc 'start', 'Starts Osbourne'
+
+      def start
+        puts "Launching Osbourne workers"
+        Osbourne::Runner.instance.run
+      end
+
+      desc 'version', 'Prints version'
+      def version
+        say "Osbourne #{Osbourne::VERSION}"
+      end
+
+    end
+  end
+end
+
+Osbourne::CLI::Runner.start

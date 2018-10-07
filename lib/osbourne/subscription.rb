@@ -17,9 +17,13 @@ module Osbourne
     private
 
     def subscribe
-      Osbourne.cache.fetch("osbourne_sub_t_#{topic.name}_q_#{queue.name}") do
-        sns.subscribe(topic_arn: topic.arn, protocol: "sqs", endpoint: queue.arn).subscription_arn
-      end
+      Osbourne.logger.info("Checking subscription for #{queue.name} to #{topic.name}")
+
+      return if Osbourne.existing_subscriptions_for(topic).include? queue.arn
+
+      Osbourne.logger.info("Subscribing #{queue.name} to #{topic.name}")
+      sns.subscribe(topic_arn: topic.arn, protocol: "sqs", endpoint: queue.arn).subscription_arn
+      Osbourne.clear_subscriptions_for(topic)
     end
   end
 end

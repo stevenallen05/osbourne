@@ -19,6 +19,10 @@ AllCops:
 Rails:
   Enabled: true
 
+Rails/Exit:
+  Exclude:
+    - 'lib/osbourne/runner.rb'
+
 Metrics/LineLength:
   IgnoreCopDirectives: true
   Max: 120
