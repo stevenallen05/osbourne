@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
     qeues, and dead-letter queues
   HEREDOC
 
-  s.add_dependency "aws-sdk", "~> 3"
+  s.add_dependency "aws-sdk-core", "~> 3"
   s.add_dependency "aws-sdk-sns", "~> 1"
   s.add_dependency "aws-sdk-sqs", "~> 1"
   s.add_dependency "rails", "~> 5"
