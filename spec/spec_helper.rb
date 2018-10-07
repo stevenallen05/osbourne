@@ -72,5 +72,4 @@ RSpec.configure do |config|
 
   Osbourne.config.cache = ActiveSupport::Cache::NullStore.new
   Osbourne.config.logger = Logger.new("log/test.log")
-  # Osbourne.config.lock = Osbourne::Locks::NOOP.new
 end
