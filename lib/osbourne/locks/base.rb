@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "osbourne"
+
 module Osbourne
   module Locks
     module Base

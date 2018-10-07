@@ -1,0 +1,2 @@
+body: "{\"Message\": \"{\\\"stuff\\\":\\\"what\\\"}\", \"Type\": \"Notification\", \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:hello\", \"MessageId\": \"f454e7b6-ccf4-40b6-83e6-6c5a8f9b600e\"}"
+md5_of_body: "00000000000000000000000000000000"

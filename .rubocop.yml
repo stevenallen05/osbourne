@@ -169,3 +169,10 @@ Metrics/ModuleLength:
     
 Rails/HasAndBelongsToMany:
   Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Exclude:
+    - spec/shared_examples/*

@@ -13,6 +13,6 @@ RSpec.describe Osbourne::Topic, type: :model do
   it "publishes to SNS" do
     expect(sns_client).to receive(:publish).with(topic_arn: topic.arn,
                                                  message:   "test")
-    topic.publish("test")
+    Osbourne.publish(topic.name, "test")
   end
 end

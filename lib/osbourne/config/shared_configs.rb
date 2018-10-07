@@ -24,6 +24,10 @@ module Osbourne
       def logger
         config.logger ||= Logger.new(STDOUT)
       end
+
+      def lock
+        config.lock || Osbourne::Locks::NOOP.new
+      end
     end
   end
 end
