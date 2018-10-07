@@ -22,8 +22,9 @@ module Osbourne
       return if Osbourne.existing_subscriptions_for(topic).include? queue.arn
 
       Osbourne.logger.info("Subscribing #{queue.name} to #{topic.name}")
-      sns.subscribe(topic_arn: topic.arn, protocol: "sqs", endpoint: queue.arn).subscription_arn
+      @arn = sns.subscribe(topic_arn: topic.arn, protocol: "sqs", endpoint: queue.arn).subscription_arn
       Osbourne.clear_subscriptions_for(topic)
+      @arn
     end
   end
 end

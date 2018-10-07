@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.shared_context "mock sns", shared_context: :metadata do
+RSpec.shared_context "with mock sns" do
   let(:sns_client) { instance_double("Aws::SNS::Client") }
 
   before {
@@ -15,6 +15,11 @@ RSpec.shared_context "mock sns", shared_context: :metadata do
                                                   endpoint:  be_a(String)) do |args|
       OpenStruct.new(subscription_arn: "arn:aws:sns:us-east-2:123456789012:#{args[:topic_arn]}:#{SecureRandom.uuid}")
     end
+
+    allow(sns_client).to receive(:list_subscriptions_by_topic).with(topic_arn: anything) do |_args|
+      OpenStruct.new(subscriptions: [])
+    end
+
     Osbourne.sns_client = sns_client
   }
 

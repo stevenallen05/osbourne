@@ -7,10 +7,14 @@ class TestWorker < Osbourne::WorkerBase
 end
 
 RSpec.describe Osbourne::WorkerBase, type: :model do
-  include_context "mock sqs"
-  include_context "mock sns"
+  include_context "with mock sqs"
+  include_context "with mock sns"
 
   subject(:test_worker) { TestWorker }
+
+  # before {
+  #   subscribe_queue_to_topic(TestWorker.queue.arn, TestWorker.topics.first.arn)
+  # }
 
   before { Osbourne.provision_worker_queues }
 

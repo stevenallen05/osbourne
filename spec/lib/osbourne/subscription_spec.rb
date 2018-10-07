@@ -3,8 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Osbourne::Subscription, type: :model do
-  include_context "mock sns"
-  include_context "mock sqs"
+  include_context "with mock sns"
+  include_context "with mock sqs"
   subject(:subscription) { described_class.new(topic, queue) }
 
   let(:queue) { Osbourne::Queue.new("queue_name") }

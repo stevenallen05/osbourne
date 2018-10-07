@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Osbourne::Queue, type: :model do
-  include_context "mock sqs"
+  include_context "with mock sqs"
   subject(:queue) { described_class.new(queue_name) }
 
   let(:queue_name) { "a_queue" }

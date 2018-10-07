@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Osbourne::Topic, type: :model do
-  include_context "mock sns"
+  include_context "with mock sns"
   subject(:topic) { described_class.new("topic_name") }
 
   it "creates the topic and retrieves the ARN" do

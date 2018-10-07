@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.shared_context "mock sqs", shared_context: :metadata do
+RSpec.shared_context "with mock sqs", shared_context: :metadata do
   let(:sqs_client) { instance_double("Aws::SQS::Client") }
 
   before {
