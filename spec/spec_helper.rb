@@ -3,13 +3,23 @@
 require "bundler/setup"
 Bundler.setup
 
-require "osbourne" # and any other gems you need
-
 require "simplecov"
 SimpleCov.start
 
-$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "osbourne"
+require "osbourne/services/sns"
+require "osbourne/services/sqs"
+require "osbourne/topic"
+require "osbourne/queue"
+require "osbourne/subscription"
+require "osbourne/config/shared_configs"
+require "osbourne/worker_base"
+require "osbourne/services/queue_provisioner"
+require "osbourne/launcher"
+require "osbourne/message"
+require "osbourne/existing_subscriptions"
+
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 require "rails"
 # require "redis"
