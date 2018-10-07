@@ -750,7 +750,6 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    redis (4.0.2)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -811,7 +810,6 @@ DEPENDENCIES
   osbourne!
   pry-byebug
   rake (~> 10.0)
-  redis
   rspec (~> 3)
   rubocop
   rubocop-rspec
