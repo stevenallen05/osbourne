@@ -18,8 +18,9 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "aws-sdk-sns", "~> 1.5"
-  s.add_dependency "aws-sdk-sqs", "~> 1.6"
+  s.add_dependency "aws-sdk", "~> 3"
+  s.add_dependency "aws-sdk-sns", "~> 1"
+  s.add_dependency "aws-sdk-sqs", "~> 1"
   s.add_dependency "rails", "~> 5"
   s.add_dependency "thor"
 

@@ -7,7 +7,7 @@ module Osbourne
         Osbourne.logger.info "Workers found: #{Osbourne::WorkerBase.descendants.map(&:name).join(', ')}"
         Osbourne.logger.info "Provisioning queues for all workers"
 
-        Osbourne::WorkerBase.descendants.each(&:new)
+        Osbourne::WorkerBase.descendants.each {|wbd| wbd.new.provision }
       end
     end
   end

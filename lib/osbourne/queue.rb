@@ -17,8 +17,14 @@ module Osbourne
       @arn ||= get_attributes["QueueArn"]
     end
 
-    def redrive(redrive_policy)
-      sqs.set_queue_attributes(queue_url: url, attributes: redrive_policy)
+    def redrive(retries, dead_letter_arn)
+      sqs.set_queue_attributes(queue_url:  url,
+                               attributes: {
+                                 'RedrivePolicy': {
+                                   'deadLetterTargetArn': dead_letter_arn,
+                                   'maxReceiveCount':     retries
+                                 }.to_json
+                               })
     end
 
     private

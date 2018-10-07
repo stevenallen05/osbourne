@@ -7,6 +7,11 @@ module Osbourne
       register
     end
 
+    def provision
+      register
+      register_dead_letter_queue
+    end
+
     @config = {}
 
     def config
@@ -25,8 +30,8 @@ module Osbourne
       end
     end
 
-    def max_recieve_count
-      Osbourne.max_recieve_count
+    def max_retry_count
+      Osbourne.max_retry_count
     end
 
     def dead_letter_queue_name
@@ -39,22 +44,18 @@ module Osbourne
 
     private
 
-    def redrive_policy
-      {maxReceiveCount:     "5",
-       deadLetterTargetArn: dead_letter_queue.arn}.to_json
-    end
-
     def register_dead_letter_queue
-      return unless Osbourne.config.dead_letter
+      return unless Osbourne.dead_letter
 
-      queue.redrive(redrive_policy)
+      Osbourne.logger.info "#{self.class.name} dead letter queue: arn: [#{dead_letter_queue.arn}], max retries: #{max_retry_count}" # rubocop:disable Metrics/LineLength
+      queue.redrive(max_retry_count, dead_letter_queue.arn)
     end
 
-    def register
+    def register # rubocop:disable Metrics/AbcSize
+      Osbourne.logger.info "#{self.class.name} subscriptions: Topics: [#{config[:topic_names].join(', ')}], Queue: [#{config[:queue_name]}]" # rubocop:disable Metrics/LineLength
       self.topics = config[:topic_names].map {|tn| Topic.new(tn) }
       self.queue = Queue.new(config[:queue_name])
       self.subscriptions = topics.map {|t| Subscription.new(t, queue) }
-      register_dead_letter_queue
     end
 
     class << self

@@ -17,8 +17,8 @@ module Osbourne
         config.dead_letter ||= true
       end
 
-      def max_recieve_count
-        config.max_recieve_count.to_s ||= "5"
+      def max_retry_count
+        @max_retry_count ||= (config.max_retry_count.presence || 5).to_s
       end
 
       def logger

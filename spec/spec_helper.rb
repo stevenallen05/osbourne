@@ -64,4 +64,5 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 
   Osbourne.config.cache = ActiveSupport::Cache::NullStore.new
+  Osbourne.config.logger = Logger.new("log/test.log")
 end
