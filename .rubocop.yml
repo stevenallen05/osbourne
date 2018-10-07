@@ -14,10 +14,14 @@ AllCops:
     - 'bin/*'
     - 'config/**/*'
     - 'spec/rails_helper.rb'
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 2.3
 
 Rails:
   Enabled: true
+
+Rails/Output:
+  Exclude:
+    - 'lib/osbourne/runner.rb'
 
 Rails/Exit:
   Exclude:
