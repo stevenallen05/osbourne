@@ -5,7 +5,7 @@ Bundler.setup
 
 require "simplecov"
 require "simplecov-console"
-SimpleCov.formatter = SimpleCov::Formatter::Console
+(SimpleCov.formatter = SimpleCov::Formatter::Console) if ENV["CI"]
 
 SimpleCov.start
 
