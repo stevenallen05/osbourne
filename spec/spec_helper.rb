@@ -9,6 +9,7 @@ require "simplecov-console"
 
 SimpleCov.start do
   add_filter "spec/"
+  add_filter "lib/osbourne/railtie.rb"
 end
 
 require "osbourne"
