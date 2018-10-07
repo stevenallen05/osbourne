@@ -8,12 +8,8 @@ module Osbourne
       self.class.config
     end
 
-    def process(message)
-      do_work(message)
-      true
-    rescue Exception => ex # rubocop:disable Lint/RescueException
-      Osbourne.logger.error("[MSG ID: #{message.id}] #{ex.message}")
-      false
+    def process(_message)
+      raise NotImplementedError, "#{self} must implement class method `process`"
     end
 
     def config=(config)
@@ -49,7 +45,7 @@ module Osbourne
       end
 
       def polling_queue
-        Aws::SQS::Queue.new(queue.url, client: Osbourne.sqs_client)
+        @polling_queue ||= Aws::SQS::Queue.new(queue.url, client: Osbourne.sqs_client)
       end
     end
 

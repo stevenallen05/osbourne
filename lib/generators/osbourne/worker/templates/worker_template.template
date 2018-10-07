@@ -1,33 +1,14 @@
-class <%= name.singularize.camelcase %>Worker < WorkerBase
-  
-  # `queue` needs to be unique, `topic` does not
-  # IMPORTANT: Make sure to add the `queue` to `config/queue_workers.yml`
-  # `lock_timeout` is optional, defaults to 2000ms
-  message_setup queue: '<%= name.singularize.underscore %>', topic: '<%= topic %>' #, lock_timeout: 2000
+# frozen_string_literal: true
 
+class <%= name.singularize.camelcase %>Worker < Osbourne::WorkerBase
 
-  # `metadata` is a Shoryuken::Message object that includes far more metadata than will likely be necessary.
-  # For idempodency, store `metadata.message_id` somewhere to ensure it hasn't been processed already.
+  worker_config topics: %w[<%= topic %>] #, max_batch_size: 10, max_wait: 10
 
-  # `message` is a hash with the following keys:
-  #   * message - the original message. If it was a JSON, it will be parsed into a hash
-  #   * type - this will always be 'Notification'
-  #   * topic_arn - the ARN of the SNS topic that originally broadcast the message
-  #   * message_id - the original message UUID sent to the SNS topic. 
-  #                  Note: the SNS and SQS message IDs will not be the same
-  #
-
-  # `metadata` is a `Shoryuken::Message` object. The only important item to note in here will be
-  # `metadata.message_id`. This is the UUID serial number of the SQS message that was sent to the
-  # queue listener. If you only want to process a message once (which is likely), store this ID somewhere,
-  # either as part of your target model or in Redis. The message queue guarantees at-least-once delivery,
-  # but sometimes messages will be delivered twice for reasons such as network latency.
-
-  def do_work(metadata, message)
-    # Do some check to make sure you haven't already processed metadata.message_id
-    
-    # The deserialized message that was sent will be stored in `message[:message]`
-    # 
-    puts message[:message]
+  def process(message)
+    puts message.body  # This will always be a string
+    puts message.topic # The topic this message was published to.
+                       #   Useful if this worker subscribes to more than one topic
+    puts message.id    # The UUID for this message. Useful for validating if this is
+                       #   the first time it has been processed 
   end
 end
