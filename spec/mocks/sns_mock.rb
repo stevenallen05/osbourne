@@ -16,8 +16,12 @@ RSpec.shared_context "with mock sns" do
       OpenStruct.new(subscription_arn: "arn:aws:sns:us-east-2:123456789012:#{args[:topic_arn]}:#{SecureRandom.uuid}")
     end
 
-    allow(sns_client).to receive(:list_subscriptions_by_topic).with(topic_arn: anything) do |_args|
-      OpenStruct.new(subscriptions: [])
+    allow(sns_client).to receive(:list_subscriptions_by_topic).with(topic_arn: anything) do |_|
+      OpenStruct.new(subscriptions: [], next_token: SecureRandom.uuid)
+    end
+
+    allow(sns_client).to receive(:list_subscriptions_by_topic).with(topic_arn: anything, next_token: anything) do |_|
+      OpenStruct.new(subscriptions: [], next_token: "")
     end
 
     Osbourne.sns_client = sns_client
