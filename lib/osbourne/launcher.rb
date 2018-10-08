@@ -33,6 +33,8 @@ module Osbourne
               wait_time_seconds:      worker.config[:max_wait],
               max_number_of_messages: worker.config[:max_batch_size]
             ).each {|msg| process(worker_instance, Osbourne::Message.new(msg)) }
+            sleep(Osbourne.sleep_time)
+
             break if @stop
           end
         }
@@ -43,7 +45,9 @@ module Osbourne
       Osbourne.logger.info("[MSG] Worker: #{worker.class.name} Valid: #{message.valid?} ID: #{message.id} Body: #{message.raw_body}") # rubocop:disable Metrics/LineLength
       return unless message.valid?
 
-      message.delete if worker.process(message)
+      Osbourne.lock.try_with_lock(message.id) do
+        message.delete if worker.process(message)
+      end
     rescue Exception => ex # rubocop:disable Lint/RescueException
       Osbourne.logger.error("[MSG ID: #{message.id}] #{ex.message}")
     end

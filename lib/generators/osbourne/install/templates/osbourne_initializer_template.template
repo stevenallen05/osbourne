@@ -6,6 +6,23 @@ Osbourne.configure do |config|
   # config.cache = Rails.cache
 
   # Dead letter queues are used to store messages that fail processing for some reason
-  # They are enabled by default, uncomment this line to disable them.
-  # config.dead_letter = false
+  # They are enabled by default
+  # config.dead_letter = true
+
+  # A message will be attempted `max_retry_count` times before being
+  # sent to the dead letter queue
+  # config.max_retry_count = 5 
+
+  # Amount of time each worker will wait between attempting to fetch messages
+  # config.sleep_time = 15.seconds
+
+  config.logger = Rails.logger
+
+  # The lock strategy to be used
+  # Supported lock strategies:
+  #  * Circuitry::Locks::Redis - requires a redis client or redis config
+  #  * Circuitry::Locks::NOOP - the default. No locking. Bad for production
+  #  * Circuitry::Locks::Memory - uses pure memory 
+  # config.lock = Circuitry::Locks::Redis.new(url: 'redis://localhost:6379')
+
 end

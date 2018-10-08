@@ -27,6 +27,22 @@ module Osbourne
         unlock!(lock_key(id))
       end
 
+      def try_with_lock(id)
+        if soft_lock(id)
+          begin
+            yield
+          rescue => e # rubocop:disable Style/RescueStandardError
+            unlock(id)
+            raise e
+          end
+
+          hard_lock(id)
+          true
+        else
+          false
+        end
+      end
+
       protected
 
       def lock(_key, _ttl)
