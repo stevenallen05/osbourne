@@ -10,29 +10,19 @@ require "simplecov-console"
 SimpleCov.start do
   add_filter "spec/"
   add_filter "lib/osbourne/railtie.rb"
+  add_filter "lib/generators"
 end
 
-require "osbourne"
-require "osbourne/services/sns"
-require "osbourne/services/sqs"
-require "osbourne/topic"
-require "osbourne/queue"
-require "osbourne/subscription"
-require "osbourne/config/shared_configs"
-require "osbourne/worker_base"
-require "osbourne/services/queue_provisioner"
-require "osbourne/launcher"
-require "osbourne/message"
-require "osbourne/existing_subscriptions"
+Dir[File.expand_path("lib/**/*.rb")].each {|f| require f }
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 require "rails"
-# require "redis"
-# require "mock_redis"
+require "redis"
+require "mock_redis"
 require "pry-byebug"
 require "securerandom"
-require "awesome_print"
+require "connection_pool"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -50,6 +40,7 @@ Dir[File.expand_path("spec/fixtures/**/*.rb")].each {|f| require f }
 Dir[File.expand_path("spec/support/**/*.rb")].each {|f| require f }
 Dir[File.expand_path("spec/mocks/**/*.rb")].each {|f| require f }
 Dir[File.expand_path("spec/shared_contexts/**/*.rb")].each {|f| require f }
+Dir[File.expand_path("spec/shared_examples/**/*.rb")].each {|f| require f }
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

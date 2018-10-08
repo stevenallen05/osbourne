@@ -9,6 +9,12 @@ module Osbourne
       @message = message
     end
 
+    def json?
+      !JSON.parse(parsed_content["Message"]).nil?
+    rescue JSON::ParserError
+      false
+    end
+
     def valid?
       message.md5_of_body == Digest::MD5.hexdigest(message.body)
     end
@@ -17,16 +23,10 @@ module Osbourne
       message.message_id
     end
 
-    def raw_body
-      message.body
-    end
-
     def parsed_body
-      @parsed_body ||= JSON.parse(message.body).transform_keys(&:downcase).symbolize_keys
-    end
-
-    def body
-      parsed_body[:message]
+      JSON.parse(parsed_content["Message"])
+    rescue JSON::ParserError
+      parsed_content["Message"]
     end
 
     def delete
@@ -35,7 +35,21 @@ module Osbourne
     end
 
     def topic
-      parsed_body[:topicarn].split(":").last
+      parsed_content["TopicArn"].split(":").last
+    end
+
+    private
+
+    def parsed_content
+      @parsed_content ||= JSON.parse(message.body)
+    end
+
+    def raw_body
+      message.body
+    end
+
+    def body
+      parsed_content["Message"]
     end
   end
 end

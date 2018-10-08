@@ -17,6 +17,7 @@ module Osbourne
     def fetch_existing_subscriptions_for(topic)
       results = []
       r = nil
+      Osbourne.lock.hard_lock("osbourne_fetch_sub_lock_#{topic.name}")
       loop do
         params = {topic_arn: topic.arn}
         params[:next_token] = r.next_token if r.try(:next_token)
@@ -24,6 +25,7 @@ module Osbourne
         results << r.subscriptions.map(&:endpoint)
         break unless r.try(:next_token).presence
       end
+      Osbourne.lock.unlock("osbourne_fetch_sub_lock_#{topic.name}")
       results.flatten.uniq
     end
   end

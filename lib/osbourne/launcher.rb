@@ -46,7 +46,6 @@ module Osbourne
       message.delete if worker.process(message)
     rescue Exception => ex # rubocop:disable Lint/RescueException
       Osbourne.logger.error("[MSG ID: #{message.id}] #{ex.message}")
-      false
     end
   end
 end

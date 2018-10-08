@@ -12,15 +12,18 @@ module Osbourne
   class Runner
     include Singleton
 
+    # rubocop:disable Metrics/MethodLength
     def run
       self_read, self_write = IO.pipe
 
       %w[INT TERM USR1 TSTP TTIN].each do |sig|
-        trap sig do
-          self_write.puts(sig)
+        begin
+          trap sig do
+            self_write.puts(sig)
+          end
+        rescue ArgumentError
+          puts "Signal #{sig} not supported"
         end
-      rescue ArgumentError
-        puts "Signal #{sig} not supported" # rubocop:disable Rails/Output
       end
 
       @launcher = Osbourne::Launcher.new
@@ -38,6 +41,7 @@ module Osbourne
         exit 0
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 

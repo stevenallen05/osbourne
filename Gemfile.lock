@@ -74,6 +74,7 @@ GEM
     byebug (10.0.2)
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
+    connection_pool (2.2.2)
     crass (1.0.4)
     diff-lcs (1.3)
     docile (1.3.1)
@@ -173,6 +174,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    redis (4.0.2)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -230,6 +232,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   bundler (~> 1.8)
+  connection_pool
   guard
   guard-bundler
   guard-rspec
@@ -237,6 +240,7 @@ DEPENDENCIES
   osbourne!
   pry-byebug
   rake (~> 10.0)
+  redis
   rspec (~> 3)
   rubocop
   rubocop-rspec

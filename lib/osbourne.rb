@@ -12,6 +12,10 @@ require "osbourne/services/queue_provisioner"
 require "osbourne/launcher"
 require "osbourne/message"
 require "osbourne/existing_subscriptions"
+require "osbourne/locks/base"
+require "osbourne/locks/noop"
+require "osbourne/locks/memory"
+require "osbourne/locks/redis"
 
 module Osbourne
   class << self
