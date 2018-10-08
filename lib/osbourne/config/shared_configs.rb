@@ -28,6 +28,10 @@ module Osbourne
       def lock
         config.lock || Osbourne::Locks::NOOP.new
       end
+
+      def sleep_time
+        config.sleep_time || 15
+      end
     end
   end
 end

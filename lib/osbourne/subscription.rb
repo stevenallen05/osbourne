@@ -20,12 +20,17 @@ module Osbourne
       Osbourne.logger.info("Checking subscription for #{queue.name} to #{topic.name}")
       return if Osbourne.existing_subscriptions_for(topic).include? queue.arn
 
-      Osbourne.lock.hard_lock("osbourne_sub_lock_#{topic.name}")
-      Osbourne.logger.info("Subscribing #{queue.name} to #{topic.name}")
-      @arn = sns.subscribe(topic_arn: topic.arn, protocol: "sqs", endpoint: queue.arn).subscription_arn
-      Osbourne.clear_subscriptions_for(topic)
-      Osbourne.lock.unlock("osbourne_sub_lock_#{topic.name}")
-      @arn
+      handled = Osbourne.lock.try_with_lock("osbourne_sub_lock_#{topic.name}") do
+        Osbourne.logger.info("Subscribing #{queue.name} to #{topic.name}")
+        @arn = sns.subscribe(topic_arn: topic.arn, protocol: "sqs", endpoint: queue.arn).subscription_arn
+        Osbourne.clear_subscriptions_for(topic)
+      end
+      if handled
+        @arn
+      else
+        sleep(3)
+        subscribe
+      end
     end
   end
 end
