@@ -27,7 +27,7 @@ module Osbourne
         unlock!(lock_key(id))
       end
 
-      def try_with_lock(id)
+      def try_with_lock(id, hard_lock: false)
         if soft_lock(id)
           begin
             yield
@@ -36,7 +36,7 @@ module Osbourne
             raise e
           end
 
-          hard_lock(id)
+          hard_lock(id) if hard_lock
           true
         else
           false

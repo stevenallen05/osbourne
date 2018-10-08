@@ -45,7 +45,8 @@ module Osbourne
       Osbourne.logger.info("[MSG] Worker: #{worker.class.name} Valid: #{message.valid?} ID: #{message.id} Body: #{message.raw_body}") # rubocop:disable Metrics/LineLength
       return unless message.valid?
 
-      Osbourne.lock.try_with_lock(message.id) do
+      # hard_lock to prevent duplicate processing over the hard_lock lifespan
+      Osbourne.lock.try_with_lock(message.id, hard_lock: true) do
         message.delete if worker.process(message)
       end
     rescue Exception => ex # rubocop:disable Lint/RescueException
