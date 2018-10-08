@@ -30,7 +30,14 @@ $ bundle install
 $ bundle exec rails g osbourne:install
 ```
 
+
 ## Usage
+
+To run all workers in `app/workers`:
+
+```bash
+$ bundle exec osbourne
+```
 
 ### Generating a worker
 
