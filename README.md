@@ -4,7 +4,7 @@
 
 A fan-out pubsub message implementation for Rails 5.
 
-Named after the world's most famous plumber, Ozzy Osbourme
+Named after the world's most famous plumber, Ozzy Osbourne
 
 This is a work-in-progress, and is not yet ready for production use
 
@@ -30,7 +30,14 @@ $ bundle install
 $ bundle exec rails g osbourne:install
 ```
 
+
 ## Usage
+
+To run all workers in `app/workers`:
+
+```bash
+$ bundle exec osbourne
+```
 
 ### Generating a worker
 
