@@ -4,7 +4,7 @@
 
 A fan-out pubsub message implementation for Rails 5.
 
-Named after the world's most famous plumber, Ozzy Osbourbe
+Named after the world's most famous plumber, Ozzy Osbourme
 
 This is a work-in-progress, and is not yet ready for production use
 
