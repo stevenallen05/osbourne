@@ -38,14 +38,14 @@ module Osbourne
       parsed_content["TopicArn"].split(":").last
     end
 
+    def raw_body
+      message.body
+    end
+
     private
 
     def parsed_content
       @parsed_content ||= JSON.parse(message.body)
-    end
-
-    def raw_body
-      message.body
     end
 
     def body

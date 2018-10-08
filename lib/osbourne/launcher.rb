@@ -11,7 +11,7 @@ module Osbourne
     def start!
       Osbourne.logger.info("Launching Osbourne workers")
       @stop = false
-      @threads = poll
+      @threads = poll_loop
     end
 
     def stop
@@ -22,24 +22,27 @@ module Osbourne
       @threads.each {|thr| Thread.kill(thr) }
     end
 
-    private
-
-    def poll
+    def polling_loop
       Osbourne::WorkerBase.descendants.map do |worker|
         Thread.new {
           worker_instance = worker.new
           loop do
-            worker.polling_queue.receive_messages(
-              wait_time_seconds:      worker.config[:max_wait],
-              max_number_of_messages: worker.config[:max_batch_size]
-            ).each {|msg| process(worker_instance, Osbourne::Message.new(msg)) }
+            poll(worker_instance)
             sleep(Osbourne.sleep_time)
-
             break if @stop
           end
         }
       end
     end
+
+    def poll(worker)
+      worker.polling_queue.receive_messages(
+        wait_time_seconds:      worker.config[:max_wait],
+        max_number_of_messages: worker.config[:max_batch_size]
+      ).each {|msg| process(worker, Osbourne::Message.new(msg)) }
+    end
+
+    private
 
     def process(worker, message)
       Osbourne.logger.info("[MSG] Worker: #{worker.class.name} Valid: #{message.valid?} ID: #{message.id} Body: #{message.raw_body}") # rubocop:disable Metrics/LineLength

@@ -16,6 +16,14 @@ module Osbourne
       self.class.config = config
     end
 
+    def queue
+      self.class.queue
+    end
+
+    def polling_queue
+      self.class.polling_queue
+    end
+
     class << self
       attr_accessor :config, :subscriptions, :topics, :queue
 
