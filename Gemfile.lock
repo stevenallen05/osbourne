@@ -6,7 +6,7 @@ PATH
       aws-sdk-sns (~> 1)
       aws-sdk-sqs (~> 1)
       rails (~> 5)
-      thor
+      thor (~> 0)
 
 GEM
   remote: https://rubygems.org/
@@ -55,7 +55,6 @@ GEM
     ansi (1.5.0)
     arel (9.0.0)
     ast (2.4.0)
-    awesome_print (1.8.0)
     aws-eventstream (1.0.1)
     aws-partitions (1.105.0)
     aws-sdk-core (3.30.0)
@@ -230,22 +229,21 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  awesome_print
   bundler (~> 1.8)
-  connection_pool
-  guard
-  guard-bundler
-  guard-rspec
-  mock_redis
+  connection_pool (~> 2)
+  guard (~> 2)
+  guard-bundler (~> 2.1)
+  guard-rspec (~> 4.7)
+  mock_redis (~> 0)
   osbourne!
-  pry-byebug
+  pry-byebug (~> 3.6)
   rake (~> 10.0)
-  redis
+  redis (~> 4)
   rspec (~> 3)
-  rubocop
-  rubocop-rspec
-  simplecov
-  simplecov-console
+  rubocop (~> 0)
+  rubocop-rspec (~> 1)
+  simplecov (~> 0.16)
+  simplecov-console (~> 0.4)
 
 BUNDLED WITH
    1.16.5
