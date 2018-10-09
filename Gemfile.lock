@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    osbourne (0.1.0)
+    osbourne (0.1.1)
       aws-sdk-core (~> 3)
       aws-sdk-sns (~> 1)
       aws-sdk-sqs (~> 1)

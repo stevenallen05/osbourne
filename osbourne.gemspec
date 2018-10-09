@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.license     = "GPL-3.0"
   s.executables = %w[osbourne]
   s.files = Dir["{bin,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
+  s.required_ruby_version = ">= 2.3"
   s.description = <<~HEREDOC
     This is a simple implementation of the fan-out pubsub pattern for Rails, using SQS & SNS as the message broker.
     Includes a generator & runner for workers, as well as built-in provisioning for topics, subscriptions,
