@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.add_dependency "aws-sdk-sns", "~> 1"
   s.add_dependency "aws-sdk-sqs", "~> 1"
   s.add_dependency "rails", "~> 5"
-  s.add_dependency "thor", "~> 0"
+  s.add_dependency "thor", "~> 0.20"
 
   s.add_development_dependency "bundler", "~> 1.8"
   s.add_development_dependency "connection_pool", "~> 2"
