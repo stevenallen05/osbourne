@@ -20,9 +20,9 @@ Osbourne.configure do |config|
 
   # The lock strategy to be used
   # Supported lock strategies:
-  #  * Circuitry::Locks::Redis - requires a redis client or redis config
-  #  * Circuitry::Locks::NOOP - the default. No locking. Bad for production
-  #  * Circuitry::Locks::Memory - uses pure memory 
-  # config.lock = Circuitry::Locks::Redis.new(url: 'redis://localhost:6379')
+  #  * Osbourne::Locks::Redis - requires a redis client or redis config
+  #  * Osbourne::Locks::NOOP - the default. No locking. Bad for production
+  #  * Osbourne::Locks::Memory - uses pure memory 
+  # config.lock = Osbourne::Locks::Redis.new(url: 'redis://localhost:6379')
 
 end

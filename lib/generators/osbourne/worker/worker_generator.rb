@@ -5,7 +5,7 @@ require "rails/generators"
 module Osbourne
   class WorkerGenerator < Rails::Generators::NamedBase
     source_root File.expand_path("templates", __dir__)
-    argument :topic, type: :string
+    argument :topic, type: :array
 
     def generate_worker
       template "worker_template.template", "app/workers/#{name.underscore}_worker.rb"

@@ -1,5 +1,5 @@
 .bundle/
-log/*.log
+log/*
 pkg/
 vendor/*
 spec/test_app/vendor

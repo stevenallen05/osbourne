@@ -11,11 +11,11 @@ Gem::Specification.new do |s|
   s.version     = Osbourne::VERSION
   s.authors     = ["Steve Allen"]
   s.email       = ["sallen@amberstyle.ca"]
-  s.homepage    = "https://github.com/"
+  s.homepage    = "https://github.com/stevenallen05/osbourne"
   s.summary     = "A simple implementation of the fan-out pubsub pattern using SQS & SNS for Rails"
   s.license     = "GPL-3.0"
   s.executables = %w[osbourne]
-  s.files = Dir["{app,config,bin,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
+  s.files = Dir["{bin,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
   s.description = <<~HEREDOC
     This is a simple implementation of the fan-out pubsub pattern for Rails, using SQS & SNS as the message broker.
     Includes a generator & runner for workers, as well as built-in provisioning for topics, subscriptions,
