@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+Dir[File.expand_path("app/workers/**/*.rb")].each {|f| require f }
+
 Osbourne.configure do |config|
   # Defaults to a null cache. Uncomment to use the Rails cache,
   # or substitute any rails-cache compatible adapter of your choice

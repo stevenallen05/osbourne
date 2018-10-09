@@ -87,7 +87,9 @@ $ bundle exec rails g osbourne:worker worker_name topic1 topic2
 
 This will generate a `WorkerNameWorker` in `app/workers/worker_name_worker.rb`, subscribed to `topic1` and `topic2`.
 
-There is some configuration options available within the generated worker. See comments in the worker for options. 
+There is some configuration options available within the generated worker. See comments in the worker for options.
+
+SNS messages broadcast through an SQS queue will have some layers of envelop wrappings around them. The `message` object passed into the worker's `#perform` method contains some helpers to make parsing this easier. `#parsed_body` is the most important one, as it contains the actual string of the message that was originally broadcast.
 
 ### Running workers
 

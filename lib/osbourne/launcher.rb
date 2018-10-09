@@ -11,7 +11,8 @@ module Osbourne
     def start!
       Osbourne.logger.info("Launching Osbourne workers")
       @stop = false
-      @threads = poll_loop
+      @threads = polling_threads
+      polling_threads.each(&:run)
     end
 
     def stop
@@ -22,7 +23,7 @@ module Osbourne
       @threads.each {|thr| Thread.kill(thr) }
     end
 
-    def polling_loop
+    def polling_threads
       Osbourne::WorkerBase.descendants.map do |worker|
         Thread.new {
           worker_instance = worker.new
