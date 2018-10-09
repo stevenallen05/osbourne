@@ -4,8 +4,6 @@ require "yaml"
 require "erb"
 require "fileutils"
 
-require "awesome_print"
-
 module Osbourne
   module Config
     module FileLoader
