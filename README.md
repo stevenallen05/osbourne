@@ -93,9 +93,29 @@ To turn on test mode, in your spec helper:
   require 'osbourne/test'
 ```
 
-This will disable publishing and provisioning in Osbourne.
+This will enable test mode for provisioning and publishing. Example:
 
-There is also a test `Message` object you can use and pass into your workers. It stubs out the message validation, and creates a mock `message` as if it had been broadcast from SNS.
+```ruby
+  class TestWorker < Osbourne::WorkerBase
+    worker_config topics: %w[test_topic]
+
+    def process(message)
+      # Do stuff here...
+    end
+  end
+
+  RSpec.describe TestWorker do
+    subject(:worker) { described_class.new }
+
+    before do
+      # This will call `#publish` on `TestWorker`
+      Osbourne.publish('test_topic', 'message')
+    end
+  end
+
+```
+
+There is also a test `Message` object you can use and pass directly into your workers. It stubs out the message validation, and creates a mock `message` as if it had been broadcast from SNS.
 
 Example:
 
@@ -108,7 +128,6 @@ let(:message) { Osbourne::Test::Message.new(topic: "test", body: "thing") }
 
 ```
 
-**Note:** non-SNS message broadcasts are not currenly supported by the `Osbourne::Test::Message` class.
 
 
 ## Usage
