@@ -5,7 +5,6 @@ class <%= name.singularize.camelcase %>Worker < Osbourne::WorkerBase
   worker_config topics: %w[<%= topic.join(" ") %>] #, max_batch_size: 10, max_wait: 10
 
   def process(message)
-    puts message.raw_body    # This will always be a string, representing the entirety of the message
     puts message.parsed_body # If the message came from a SNS broadcast,
                              #   as opposed to a direct SQS message, it will come from here 
     puts message.topic       # The topic this message was published to.
