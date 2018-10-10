@@ -1,5 +1,18 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/295897ee565c04ad1aa5/maintainability)](https://codeclimate.com/github/stevenallen05/osbourne/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/295897ee565c04ad1aa5/test_coverage)](https://codeclimate.com/github/stevenallen05/osbourne/test_coverage)
 
+- [Osbourne](#osbourne)
+    + [Features](#features)
+  * [Installation](#installation)
+    + [AWS credentials](#aws-credentials)
+    + [Production AWS](#production-aws)
+    + [Mock AWS for local devlopment](#mock-aws-for-local-devlopment)
+    + [RSpec](#rspec)
+  * [Usage](#usage)
+    + [Publishing a message](#publishing-a-message)
+    + [Generating a worker](#generating-a-worker)
+    + [Running workers](#running-workers)
+  * [License](#license)
+
 # Osbourne
 
 A fan-out pubsub message implementation for Rails 5. Named after the world's most famous plumber, Ozzy Osbourne.
