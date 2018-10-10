@@ -21,6 +21,10 @@ module Osbourne
         @test_mode = true
       end
 
+      def test_mode=(test_mode)
+        @test_mode = test_mode
+      end
+
       def dead_letter
         config.dead_letter ||= true
       end

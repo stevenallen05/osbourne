@@ -12,12 +12,8 @@ RSpec.describe Osbourne::WorkerBase, type: :model do
 
   subject(:test_worker) { TestWorker }
 
-  # before {
-  #   subscribe_queue_to_topic(TestWorker.queue.arn, TestWorker.topics.first.arn)
-  # }
-
   before { Osbourne.provision_worker_queues }
 
   it { expect(test_worker.subscriptions.count).to eq 2 }
-  it { expect(Osbourne::WorkerBase.descendants).to contain_exactly TestWorker }
+  it { expect(Osbourne::WorkerBase.descendants).to include TestWorker }
 end

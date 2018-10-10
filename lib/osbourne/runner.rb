@@ -29,6 +29,7 @@ module Osbourne
       @launcher = Osbourne::Launcher.new
 
       begin
+        Osbourne.provision_worker_queues
         @launcher.start!
 
         while readable_io = IO.select([self_read]) # rubocop:disable Lint/AssignmentInCondition
