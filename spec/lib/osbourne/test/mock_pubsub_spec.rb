@@ -24,4 +24,5 @@ RSpec.describe Osbourne::Test::MockPubsub do
   after { Osbourne.test_mode = false }
 
   it { expect { mock_pubsub.mock_publish("test_pubsub_topic", "message") }.to change(worker, :processed) }
+  it { expect { mock_pubsub.mock_publish("not_a_real_topic", "message") }.not_to change(worker, :processed) }
 end
