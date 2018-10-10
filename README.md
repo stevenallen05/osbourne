@@ -11,6 +11,7 @@ A fan-out pubsub message implementation for Rails 5. Named after the world's mos
 * Worker generator via `rails g osbourne:worker worker_name topic`
 * Auto-provisioning of SQS queues, SNS topics, and subscriptions between them
 * Built-in support for locking to prevent accidental duplicate message delivery 
+* TODO: add some rspec test helpers to stub out AWS calls in `test`
 
 Inspired heavily by the excellent Shoryuken & Circuitry gems
 
