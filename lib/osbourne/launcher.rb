@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "osbourne"
-require "byebug"
 
 module Osbourne
   class Launcher

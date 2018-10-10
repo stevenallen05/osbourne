@@ -29,6 +29,7 @@ require "osbourne/locks/base"
 require "osbourne/locks/noop"
 require "osbourne/locks/memory"
 require "osbourne/locks/redis"
+require "osbourne/test/mock_pubsub"
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
