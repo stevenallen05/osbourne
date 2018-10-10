@@ -102,7 +102,7 @@ Example:
 ```ruby
 
 let(:test_worker) { TestWorker.new }
-let(:message) { Osbourne::Test::Message.new(topic: "test", message: "thing") }
+let(:message) { Osbourne::Test::Message.new(topic: "test", body: "thing") }
 
 # Now you can use `test_worker.process(message)` in your specs
 
