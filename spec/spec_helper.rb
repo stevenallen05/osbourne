@@ -13,7 +13,22 @@ SimpleCov.start do
   add_filter "lib/generators"
 end
 
-Dir[File.expand_path("lib/**/*.rb")].each {|f| require f }
+require "osbourne/railtie"
+require "osbourne/services/sns"
+require "osbourne/services/sqs"
+require "osbourne/topic"
+require "osbourne/queue"
+require "osbourne/subscription"
+require "osbourne/config/shared_configs"
+require "osbourne/worker_base"
+require "osbourne/services/queue_provisioner"
+require "osbourne/launcher"
+require "osbourne/message"
+require "osbourne/existing_subscriptions"
+require "osbourne/locks/base"
+require "osbourne/locks/noop"
+require "osbourne/locks/memory"
+require "osbourne/locks/redis"
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 

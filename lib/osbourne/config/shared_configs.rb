@@ -13,6 +13,14 @@ module Osbourne
         config.cache ||= ActiveSupport::Cache::NullStore.new
       end
 
+      def test_mode?
+        false
+      end
+
+      def test_mode!
+        @test_mode = true
+      end
+
       def dead_letter
         config.dead_letter ||= true
       end

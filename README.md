@@ -1,5 +1,18 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/295897ee565c04ad1aa5/maintainability)](https://codeclimate.com/github/stevenallen05/osbourne/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/295897ee565c04ad1aa5/test_coverage)](https://codeclimate.com/github/stevenallen05/osbourne/test_coverage)
 
+- [Osbourne](#osbourne)
+    + [Features](#features)
+  * [Installation](#installation)
+    + [AWS credentials](#aws-credentials)
+    + [Production AWS](#production-aws)
+    + [Mock AWS for local devlopment](#mock-aws-for-local-devlopment)
+    + [RSpec](#rspec)
+  * [Usage](#usage)
+    + [Publishing a message](#publishing-a-message)
+    + [Generating a worker](#generating-a-worker)
+    + [Running workers](#running-workers)
+  * [License](#license)
+
 # Osbourne
 
 A fan-out pubsub message implementation for Rails 5. Named after the world's most famous plumber, Ozzy Osbourne.
@@ -11,7 +24,7 @@ A fan-out pubsub message implementation for Rails 5. Named after the world's mos
 * Worker generator via `rails g osbourne:worker worker_name topic`
 * Auto-provisioning of SQS queues, SNS topics, and subscriptions between them
 * Built-in support for locking to prevent accidental duplicate message delivery 
-* TODO: add some rspec test helpers to stub out AWS calls in `test`
+* Test helpers
 
 Inspired heavily by the excellent Shoryuken & Circuitry gems
 
@@ -71,6 +84,32 @@ AWS_REGION=us-east-1
 ```
 
 There must be a region set. Use whichever is appropriate for your situation.
+
+### RSpec
+
+To turn on test mode, in your spec helper:
+
+```ruby
+  require 'osbourne/test'
+```
+
+This will disable publishing and provisioning in Osbourne.
+
+There is also a test `Message` object you can use and pass into your workers. It stubs out the message validation, and creates a mock `message` as if it had been broadcast from SNS.
+
+Example:
+
+```ruby
+
+let(:test_worker) { TestWorker.new }
+let(:message) { Osbourne::Test::Message.new(topic: "test", message: "thing") }
+
+# Now you can use `test_worker.process(message)` in your specs
+
+```
+
+**Note:** non-SNS message broadcasts are not currenly supported by the `Osbourne::Test::Message` class.
+
 
 ## Usage
 

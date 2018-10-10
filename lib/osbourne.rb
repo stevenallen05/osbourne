@@ -25,10 +25,14 @@ module Osbourne
     attr_writer :sns_client, :sqs_client
 
     def sns_client
+      return if Osbourne.test_mode?
+
       @sns_client ||= Aws::SNS::Client.new(Osbourne.config.sns_config)
     end
 
     def sqs_client
+      return if Osbourne.test_mode?
+
       @sqs_client ||= Aws::SQS::Client.new(Osbourne.config.sqs_config)
     end
 
