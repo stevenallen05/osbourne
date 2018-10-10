@@ -8,7 +8,7 @@ module Osbourne
   module Config
     module FileLoader
       def self.load(cfile, environment="development")
-        return if should_run?(cfile)
+        return unless should_run?(cfile)
 
         base_opts = YAML.safe_load(ERB.new(IO.read(cfile)).result) || {}
         env_opts = base_opts[environment] || {}
