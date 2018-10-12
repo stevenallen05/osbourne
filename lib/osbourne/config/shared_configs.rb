@@ -34,7 +34,7 @@ module Osbourne
       end
 
       def logger
-        config.logger ||= Logger.new(STDOUT)
+        config.logger ||= Logger.new('log/osbourne.log')
       end
 
       def lock

@@ -13,8 +13,8 @@ module Osbourne
         base_opts = YAML.safe_load(ERB.new(IO.read(cfile)).result) || {}
         env_opts = base_opts[environment] || {}
 
-        Osbourne.config.sns_config = env_opts["publisher"].symbolize_keys || {}
-        Osbourne.config.sqs_config = env_opts["subscriber"].symbolize_keys || {}
+        Osbourne.config.sns_config = env_opts["publisher"]&.symbolize_keys || {}
+        Osbourne.config.sqs_config = env_opts["subscriber"]&.symbolize_keys || {}
         true
       end
 
