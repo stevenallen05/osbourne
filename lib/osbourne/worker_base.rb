@@ -71,10 +71,9 @@ module Osbourne
         Osbourne.logger.info "#{self.class.name} subscriptions: Topics: [#{config[:topic_names].join(', ')}], Queue: [#{config[:queue_name]}]" # rubocop:disable Metrics/LineLength
         self.topics = config[:topic_names].map {|tn| Topic.new(tn) }
         self.queue = Queue.new(config[:queue_name])
-        self.subscriptions = topics.map {|t| 
-                Osbourne.logger.info "Ensuring subscription for #{t.name} to #{queue.url}" # rubocop:disable Metrics/LineLength
-                Subscription.new(t, queue)
-          
+        self.subscriptions = topics.map {|t|
+          Osbourne.logger.info "Ensuring subscription for #{t.name} to #{queue.url}"
+          Subscription.new(t, queue)
         }
       end
 
@@ -82,12 +81,13 @@ module Osbourne
         "#{name.underscore}_queue"
       end
 
-      def worker_config(topics: [], max_batch_size: 10, max_wait: 10)
+      def worker_config(topics: [], max_batch_size: 10, max_wait: 10, threads: Osbourne.threads_per_worker)
         self.config = {
           topic_names:    Array(topics),
           queue_name:     queue_name,
           max_batch_size: max_batch_size,
-          max_wait:       max_wait
+          max_wait:       max_wait,
+          threads:        threads
         }
       end
     end

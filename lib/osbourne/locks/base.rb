@@ -36,7 +36,7 @@ module Osbourne
             unlock(id)
             raise e
           end
-          
+
           hard_lock(id) if hard_lock
           true
         else

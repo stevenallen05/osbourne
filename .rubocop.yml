@@ -22,6 +22,7 @@ Rails:
 Rails/Output:
   Exclude:
     - 'lib/osbourne/runner.rb'
+    - 'lib/osbourne/launcher.rb'
 
 Rails/Exit:
   Exclude:

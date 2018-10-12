@@ -36,7 +36,7 @@ module Osbourne
           signal = readable_io.first[0].gets.strip
           handle_signal(signal)
         end
-        @launcher.threads.map(&:join)
+        @launcher.wait!
       rescue Interrupt
         @launcher.stop!
         exit 0

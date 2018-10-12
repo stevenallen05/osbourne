@@ -34,7 +34,7 @@ module Osbourne
       end
 
       def logger
-        config.logger ||= Logger.new('log/osbourne.log')
+        config.logger ||= Logger.new("log/osbourne.log")
       end
 
       def lock
@@ -43,6 +43,10 @@ module Osbourne
 
       def sleep_time
         config.sleep_time || 15
+      end
+
+      def threads_per_worker
+        config.threads_per_worker ||= 5
       end
     end
   end
