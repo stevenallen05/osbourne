@@ -28,9 +28,10 @@ module Osbourne
       end
 
       def try_with_lock(id, hard_lock: false)
-        if soft_lock(id)
+        if lock(lock_key(id), soft_ttl)
           begin
             yield
+            unlock(id)
           rescue => e # rubocop:disable Style/RescueStandardError
             unlock(id)
             raise e

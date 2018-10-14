@@ -7,3 +7,4 @@ spec/test_app/test
 coverage/*
 .byebug_history
 *.gem
+doc/*

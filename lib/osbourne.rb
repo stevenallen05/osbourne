@@ -22,7 +22,7 @@ module Osbourne
     include Osbourne::Config::SharedConfigs
     include Osbourne::Services::QueueProvisioner
     include Osbourne::ExistingSubscriptions
-    attr_writer :sns_client, :sqs_client
+    # attr_writer :sns_client, :sqs_client
 
     def sns_client
       return if Osbourne.test_mode?
@@ -35,6 +35,10 @@ module Osbourne
 
       @sqs_client ||= Aws::SQS::Client.new(Osbourne.config.sqs_config)
     end
+
+    attr_writer :sns_client
+
+    attr_writer :sqs_client
 
     def publish(topic, message)
       Topic.new(topic).publish(message)

@@ -2,33 +2,23 @@
 
 class <%= name.singularize.camelcase %>Worker < Osbourne::WorkerBase
 
-  worker_config topics: %w[<%= topic.join(" ") %>] #, max_batch_size: 10, max_wait: 10
+  worker_config topics: %w[<%= topic.join(" ") %>] 
+  # Other available onfig options and their defaults:
+  # max_batch_size: 10
+  # max_wait: 10
+  # threads: Osbourne.threads_per_worker
+  # queue_name: <%= name %>_queue
+  # dead_letter_queue: true
+  # max_retry_count: Osbourne.max_retry_count
 
   def process(message)
-    puts message.parsed_body # If the message came from a SNS broadcast,
-                             #   as opposed to a direct SQS message, it will come from here 
-    puts message.topic       # The topic this message was published to.
-                             #   Useful if this worker subscribes to more than one topic
-    puts message.id          # The UUID for this message. Useful for validating if this is
-                             #   the first time it has been processed 
+    puts message.sns?         # Was this message broadcast via SNS?
+    puts message.raw_body     # The only way to access a message that wasn't sent via SNS
+    puts message.message_body # If the message came from a SNS broadcast,
+                              #   as opposed to a direct SQS message, it will come from here 
+    puts message.topic        # The topic this message was published to.
+                              #   Useful if this worker subscribes to more than one topic
+    puts message.id           # The UUID for this message. Useful for validating if this is
+                              #   the first time it has been processed 
   end
-
-  # class << self
-  #   # override this to set how many times a message will be retried before
-  #   # being redirected to the dead letter queue (if enabled)
-  #   def max_retry_count
-  #   end
-
-  #   # override this to set the worker's dead letter queue name
-  #   def dead_letter_queue_name
-  #   end
-
-  #   # override this to `false` to disable the dead letter queu for this worker
-  #   def dead_letter_queue
-  #   end
-
-  #   # override this to set the worker queue name
-  #   def queue_name
-  #   end
-  # end
 end

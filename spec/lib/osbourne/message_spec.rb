@@ -18,23 +18,27 @@ RSpec.describe Osbourne::Message, type: :model do
 
     it { expect(message).to be_valid }
     it { expect(message).to be_json }
-    it { expect(message.parsed_body).to be_a(Hash) }
+    it { expect(message.message_body).to be_a(Hash) }
     it { expect(message.topic).to eq("hello") }
+    it { expect(message.sns?).to eq true }
   end
 
   context "when checksum does not match" do
     let(:payload) { load_yaml("bad_md5_message.yml") }
 
     it { expect(message).not_to be_valid }
-    it { expect(message).to be_json }
-    it { expect(message.parsed_body).to be_a(Hash) }
+    it { expect(message).not_to be_json }
+    it { expect(message.message_body).to be_a(Hash) }
+    it { expect(message.sns?).to eq true }
   end
 
-  context "when not valid json" do
+  context "when not a SNS message" do
     let(:payload) { load_yaml("not_fanout_message.yml") }
 
     it { expect(message).not_to be_json }
     it { expect(message).to be_valid }
-    it { expect(message.parsed_body).to be_a(String) }
+    it { expect(message.message_body).to be nil }
+    it { expect(message.raw_body).to match "TEST MESSAGE" }
+    it { expect(message.sns?).to eq false }
   end
 end

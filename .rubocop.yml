@@ -22,6 +22,7 @@ Rails:
 Rails/Output:
   Exclude:
     - 'lib/osbourne/runner.rb'
+    - 'lib/osbourne/launcher.rb'
 
 Rails/Exit:
   Exclude:
@@ -30,6 +31,7 @@ Rails/Exit:
 Metrics/LineLength:
   IgnoreCopDirectives: true
   Max: 120
+  IgnoredPatterns: ['^\s*#']
 
 # No space makes the method definition shorter and differentiates
 # from a regular assignment.
@@ -180,3 +182,5 @@ RSpec/MultipleExpectations:
 RSpec/NamedSubject:
   Exclude:
     - spec/shared_examples/*
+Style/DoubleNegation:
+  Enabled: false
