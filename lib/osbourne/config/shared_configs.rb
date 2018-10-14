@@ -38,11 +38,11 @@ module Osbourne
       end
 
       def lock
-        config.lock || Osbourne::Locks::NOOP.new
+        config.lock ||= Osbourne::Locks::NOOP.new
       end
 
       def sleep_time
-        config.sleep_time || 15
+        config.sleep_time ||= 15
       end
 
       def threads_per_worker

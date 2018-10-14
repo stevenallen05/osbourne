@@ -61,10 +61,7 @@ module Osbourne
         Osbourne.logger.info "#{self.class.name} subscriptions: Topics: [#{config[:topic_names].join(', ')}], Queue: [#{config[:queue_name]}]" # rubocop:disable Metrics/LineLength
         self.topics = config[:topic_names].map {|tn| Topic.new(tn) }
         self.queue = Queue.new(config[:queue_name])
-        self.subscriptions = topics.map {|t|
-          Osbourne.logger.info "Ensuring subscription for #{t.name} to #{queue.url}"
-          Subscription.new(t, queue)
-        }
+        self.subscriptions = Subscription.new(topics, queue).subscribe_all
       end
 
       def default_queue_name

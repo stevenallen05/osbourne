@@ -27,6 +27,7 @@ module Osbourne
     end
 
     def set_queue_policy
+      Osbourne.logger.info("Setting policy for #{queue.name} (attributes: #{build_policy})")
       sqs.set_queue_attributes(queue_url: queue.url, attributes: build_policy)
     end
 

@@ -4,7 +4,7 @@ module Osbourne
   module ExistingSubscriptions
     attr_reader :existing_subscriptions
     def existing_subscriptions_for(topic)
-      Osbourne.cache.clear("osbourne_existng_subs_for_#{topic.name}")
+      Osbourne.cache.delete("osbourne_existng_subs_for_#{topic.name}")
       Osbourne.cache.fetch("osbourne_existng_subs_for_#{topic.name}") do
         results = []
         handled = Osbourne.lock.try_with_lock("osbourne_lock_subs_for_#{topic.name}") do

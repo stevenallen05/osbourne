@@ -56,7 +56,7 @@ module Osbourne
     private
 
     def process(worker, message)
-      Osbourne.logger.info("[MSG] Worker: #{worker.class.name} Valid: #{message.valid?} ID: #{message.id}")
+      Osbourne.logger.info("[MSG] Worker: #{worker.name} Valid: #{message.valid?} ID: #{message.id}")
       return false unless message.valid? && Osbourne.lock.soft_lock(message.id)
 
       Osbourne.cache.fetch(message.id, ex: 24.hours) do

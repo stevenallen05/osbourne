@@ -26,7 +26,7 @@ module Osbourne
       return if Osbourne.test_mode?
 
       Osbourne.logger.debug "Ensuring topic `#{name}` exists"
-      Osbourne.cache.fetch("osbourne_existing_topic_arn_for_#{name}") do
+      Osbourne.cache.fetch("osbourne_existing_topic_arn_for_#{name}", ex: 1.minute) do
         sns.create_topic(name: name).topic_arn
       end
     end
