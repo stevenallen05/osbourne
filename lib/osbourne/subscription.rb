@@ -8,14 +8,15 @@ module Osbourne
     def initialize(topics, queue)
       @topics = topics
       @queue = queue
+      subscribe_all
     end
+
+    private
 
     def subscribe_all
       topics.each {|topic| subscribe(topic) }
       set_queue_policy
     end
-
-    private
 
     def subscribe(topic)
       Osbourne.logger.info("Checking subscription for #{queue.name} to #{topic.name}")

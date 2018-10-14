@@ -5,7 +5,6 @@ require "spec_helper"
 RSpec.describe Osbourne::Subscription, type: :model do
   include_context "with mock sns"
   include_context "with mock sqs"
-  subject(:subscription) { described_class.new(topics, queue) }
 
   let(:queue) { Osbourne::Queue.new("queue_name") }
   let(:topics) { [Osbourne::Topic.new("topic_name")] }
@@ -15,6 +14,6 @@ RSpec.describe Osbourne::Subscription, type: :model do
                                                                            queue_url:  anything)) do |_args|
       OpenStruct.new(attributes: {"QueueArn": "arn:aws:sqs:us-east-2:123456789012:some_queue_arn"}.stringify_keys)
     end
-    subscription.subscribe_all
+    described_class.new(topics, queue)
   end
 end
