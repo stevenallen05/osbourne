@@ -2,11 +2,11 @@
 
 module Osbourne
   module Test
-    class Message
-      attr_reader :topic, :parsed_body
+    class Message < Osbourne::Message
+      attr_reader :topic, :raw_body
       def initialize(topic:, body:)
         @topic = topic
-        @parsed_body = body
+        @raw_body = body
       end
 
       def id
@@ -15,6 +15,18 @@ module Osbourne
 
       def valid?
         true
+      end
+
+      def delete; end
+
+      def sns?
+        true
+      end
+
+      private
+
+      def sns_body
+        @sns_body ||= safe_json(raw_body) || raw_body
       end
     end
   end
