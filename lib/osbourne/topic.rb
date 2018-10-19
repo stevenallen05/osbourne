@@ -14,10 +14,11 @@ module Osbourne
     end
 
     def publish(message)
+      parsed_message = parse(message)
       return if Osbourne.test_mode?
 
-      Osbourne.logger.info "[PUB] TOPIC: `#{name}` MESSAGE: `#{message}`"
-      sns.publish(topic_arn: arn, message: message.is_a?(String) ? message : message.to_json)
+      Osbourne.logger.info "[PUB] TOPIC: `#{name}` MESSAGE: `#{parsed_message}`"
+      sns.publish(topic_arn: arn, message: parsed_message)
     end
 
     private
@@ -33,6 +34,13 @@ module Osbourne
 
     def subscriptions_cache_key
       "existing_sqs_subscriptions_for_#{name}"
+    end
+
+    def parse(message)
+      return message if message.is_a?(String)
+      return message.to_json if message.respond_to?(:to_json)
+
+      raise ArgumentError, "Message must either be a string or respond to #to_json"
     end
   end
 end
