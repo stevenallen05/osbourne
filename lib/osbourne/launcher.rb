@@ -63,7 +63,7 @@ module Osbourne
         worker.new.process(message).tap {|_| Osbourne.lock.unlock(message.id) }
       end
     rescue Exception => ex # rubocop:disable Lint/RescueException
-      Osbourne.logger.error("[MSG ID: #{message.id}] #{ex.message}")
+      Osbourne.logger.error("[MSG ID: #{message.id}] [#{ex.message}]\n #{ex.backtrace_locations.join("\n")}")
       false
     end
   end
