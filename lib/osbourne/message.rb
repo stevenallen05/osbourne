@@ -76,7 +76,7 @@ module Osbourne
     # Just because a message was recieved via SQS, doesn't mean it was originally broadcast via SNS
     # @return [Boolean] Was the message broadcast via SNS?
     def sns?
-      json_body.is_a?(Hash) && (json_body.keys <=> %w[Message Type TopicArn MessageId]).zero?
+      json_body.is_a?(Hash) && (%w[Message Type TopicArn MessageId] - json_body.keys).empty?
     end
 
     private

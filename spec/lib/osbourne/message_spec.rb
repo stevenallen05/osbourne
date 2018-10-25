@@ -41,4 +41,13 @@ RSpec.describe Osbourne::Message, type: :model do
     it { expect(message.raw_body).to match "TEST MESSAGE" }
     it { expect(message.sns?).to eq false }
   end
+
+  context "when payload has extra keys" do
+    let(:payload) { load_yaml("extra_keys_valid_message.yml") }
+
+    it { expect(message).to be_valid }
+    it { expect(message).to be_json }
+    it { expect(message.message_body).to be_a(Hash) }
+    it { expect(message.sns?).to eq true }
+  end
 end
