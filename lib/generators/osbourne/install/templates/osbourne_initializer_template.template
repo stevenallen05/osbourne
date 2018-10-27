@@ -13,6 +13,9 @@ Osbourne.configure do |config|
   # sent to the dead letter queue
   # config.max_retry_count = 5 
 
+  # The prefix to be used on queues and topics. Useful for environment separation
+  # config.prefix = Rails.env
+
   # Amount of time each worker will wait between attempting to fetch messages
   # config.sleep_time = 15.seconds
 

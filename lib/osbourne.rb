@@ -47,5 +47,9 @@ module Osbourne
     def configure
       yield config
     end
+
+    def prefixer(str)
+      [Osbourne.prefix, str].reject(&:blank?).reject(&:nil?).join("_")
+    end
   end
 end

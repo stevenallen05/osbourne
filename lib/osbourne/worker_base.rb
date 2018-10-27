@@ -81,8 +81,8 @@ module Osbourne
                         dead_letter_queue: true,
                         max_retry_count: Osbourne.max_retry_count)
         self.config = {
-          topic_names:     Array(topics),
-          queue_name:      queue_name,
+          topic_names:     Array(topics).map {|tp| Osbourne.prefixer(tp) },
+          queue_name:      Osbourne.prefixer(queue_name),
           max_batch_size:  max_batch_size,
           max_wait:        max_wait,
           threads:         threads,
