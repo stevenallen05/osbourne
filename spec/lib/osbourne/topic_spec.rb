@@ -21,11 +21,13 @@ RSpec.describe Osbourne::Topic, type: :model do
     expect(topic.arn).to be_a(String)
   end
 
+  it { expect(topic.prefixed_name).to start_with Rails.env }
+
   context "when message is a string" do
     it "publishes to SNS" do
       expect(sns_client).to receive(:publish).with(topic_arn: topic.arn,
                                                    message:   "test")
-      Osbourne.publish(topic.name, "test")
+      Osbourne.publish("topic_name", "test")
     end
   end
 
@@ -36,14 +38,14 @@ RSpec.describe Osbourne::Topic, type: :model do
       expect(sns_client).to receive(:publish).with(topic_arn: topic.arn,
                                                    message:   payload.to_json)
 
-      expect { Osbourne.publish(topic.name, payload) }.not_to raise_error ArgumentError
+      expect { Osbourne.publish("topic_name", payload) }.not_to raise_error ArgumentError
     end
   end
 
   context "when message is neither a string nor jsonable" do
     it "publishes to SNS" do
       NonJsonable.instance_eval { undef :to_json }
-      expect { Osbourne.publish(topic.name, NonJsonable) }.to raise_error ArgumentError
+      expect { Osbourne.publish("topic_name", NonJsonable) }.to raise_error ArgumentError
     end
   end
 end

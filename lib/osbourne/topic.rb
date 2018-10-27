@@ -4,8 +4,10 @@ module Osbourne
   class Topic
     include Services::SNS
     attr_reader :name
+    attr_reader :prefixed_name
     def initialize(name)
       @name = name
+      @prefixed_name = Osbourne.prefixer(name)
       arn
     end
 
@@ -17,7 +19,7 @@ module Osbourne
       parsed_message = parse(message)
       return if Osbourne.test_mode?
 
-      Osbourne.logger.info "[PUB] TOPIC: `#{name}` MESSAGE: `#{parsed_message}`"
+      Osbourne.logger.info "[PUB] TOPIC: `#{prefixed_name}` MESSAGE: `#{parsed_message}`"
       sns.publish(topic_arn: arn, message: parsed_message)
     end
 
@@ -26,14 +28,14 @@ module Osbourne
     def ensure_topic
       return if Osbourne.test_mode?
 
-      Osbourne.logger.debug "Ensuring topic `#{name}` exists"
-      Osbourne.cache.fetch("osbourne_existing_topic_arn_for_#{name}", ex: 1.minute) do
-        sns.create_topic(name: name).topic_arn
+      Osbourne.logger.debug "Ensuring topic `#{prefixed_name}` exists"
+      Osbourne.cache.fetch("osbourne_existing_topic_arn_for_#{prefixed_name}", ex: 1.minute) do
+        sns.create_topic(name: prefixed_name).topic_arn
       end
     end
 
     def subscriptions_cache_key
-      "existing_sqs_subscriptions_for_#{name}"
+      "existing_sqs_subscriptions_for_#{prefixed_name}"
     end
 
     def parse(message)

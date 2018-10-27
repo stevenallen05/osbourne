@@ -48,6 +48,10 @@ module Osbourne
       def threads_per_worker
         config.threads_per_worker ||= 5
       end
+
+      def prefix
+        config.prefix ||= Rails.env
+      end
     end
   end
 end
