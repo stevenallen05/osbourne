@@ -53,7 +53,7 @@ module Osbourne
 
     def delete
       message.delete
-      Osbourne.logger.info "[MSG ID: #{id}] Cleared"
+      Osbourne.logger.info "[Osbourne] [MSG ID: #{id}] Cleared"
     end
 
     ##

@@ -19,16 +19,16 @@ module Osbourne
     end
 
     def subscribe(topic)
-      Osbourne.logger.info("Checking subscription for #{queue.name} to #{topic.name}")
+      Osbourne.logger.info("[Osbourne] Checking subscription for #{queue.prefixed_name} to #{topic.prefixed_name}")
       return if Osbourne.existing_subscriptions_for(topic).include? queue.arn
 
-      Osbourne.logger.info("Subscribing #{queue.name} to #{topic.name}")
+      Osbourne.logger.info("[Osbourne] Subscribing #{queue.prefixed_name} to #{topic.prefixed_name}")
       sns.subscribe(topic_arn: topic.arn, protocol: "sqs", endpoint: queue.arn).subscription_arn
       Osbourne.clear_subscriptions_for(topic)
     end
 
     def set_queue_policy
-      Osbourne.logger.info("Setting policy for #{queue.name} (attributes: #{build_policy})")
+      Osbourne.logger.info("[Osbourne] Setting policy for #{queue.prefixed_name} (attributes: #{build_policy})")
       sqs.set_queue_attributes(queue_url: queue.url, attributes: build_policy)
     end
 
@@ -37,7 +37,7 @@ module Osbourne
       {
         "Policy" => {
           "Version"   => "2012-10-17",
-          "Id"        => "Osbourne/#{queue.name}/SNSPolicy",
+          "Id"        => "Osbourne/#{queue.prefixed_name}/SNSPolicy",
           "Statement" => topics.map {|t| build_policy_statement(t) }
         }.to_json
       }
@@ -45,7 +45,7 @@ module Osbourne
 
     def build_policy_statement(topic)
       {
-        "Sid"       => "Sid#{topic.name}",
+        "Sid"       => "Sid#{topic.prefixed_name}",
         "Effect"    => "Allow",
         "Principal" => {"AWS" => "*"},
         "Action"    => "SQS:SendMessage",

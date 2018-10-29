@@ -6,11 +6,11 @@ module Osbourne
     class MockPubsub
       class << self
         def mock_publish(topic, message)
-          prefixed_topic = Osbourne.prefixer(topic)
+          # prefixed_topic = Osbourne.prefixer(topic)
           parsed_message = parse(message)
           Osbourne::WorkerBase.descendants.each do |worker|
-            msg = Osbourne::Test::Message.new(topic: prefixed_topic, body: parsed_message)
-            worker.new.process(msg) if worker.config[:topic_names].include? prefixed_topic
+            msg = Osbourne::Test::Message.new(topic: topic, body: parsed_message)
+            worker.new.process(msg) if worker.config[:topic_names].include? topic
           end
         end
 

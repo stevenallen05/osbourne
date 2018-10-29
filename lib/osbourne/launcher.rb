@@ -8,7 +8,7 @@ module Osbourne
     def initialize; end
 
     def start!
-      Osbourne.logger.info("Launching Osbourne workers")
+      Osbourne.logger.info("[Osbourne] Launching Osbourne workers")
       @stop = false
       @threads = global_polling_threads
     end
@@ -29,7 +29,7 @@ module Osbourne
 
     def global_polling_threads
       Osbourne::WorkerBase.descendants.map do |worker|
-        Osbourne.logger.debug("Spawning thread for #{worker.name}")
+        Osbourne.logger.debug("[Osbourne] Spawning thread for #{worker.name}")
         Thread.new { poll(worker) }
       end
     end
@@ -56,14 +56,14 @@ module Osbourne
     private
 
     def process(worker, message)
-      Osbourne.logger.info("[MSG] Worker: #{worker.name} Valid: #{message.valid?} ID: #{message.id}")
+      Osbourne.logger.info("[Osbourne] [MSG] Worker: #{worker.name} Valid: #{message.valid?} ID: #{message.id}")
       return false unless message.valid? && Osbourne.lock.soft_lock(message.id)
 
       Osbourne.cache.fetch(message.id, ex: 24.hours) do
         worker.new.process(message).tap {|_| Osbourne.lock.unlock(message.id) }
       end
     rescue Exception => ex # rubocop:disable Lint/RescueException
-      Osbourne.logger.error("[MSG ID: #{message.id}] [#{ex.message}]\n #{ex.backtrace_locations.join("\n")}")
+      Osbourne.logger.error("[Osbourne] [MSG ID: #{message.id}] [#{ex.message}]\n #{ex.backtrace_locations.join("\n")}")
       false
     end
   end

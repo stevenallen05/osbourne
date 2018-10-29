@@ -47,38 +47,38 @@ module Osbourne
     private
 
     def execute_soft_shutdown
-      Osbourne.logger.info { "Received USR1, will soft shutdown down" }
+      Osbourne.logger.info { "[Osbourne] Received USR1, will soft shutdown down" }
 
       @launcher.stop
       exit 0
     end
 
     def execute_terminal_stop
-      Osbourne.logger.info { "Received TSTP, will stop accepting new work" }
+      Osbourne.logger.info { "[Osbourne] Received TSTP, will stop accepting new work" }
 
       @launcher.stop!
     end
 
     def print_threads_backtrace
       Thread.list.each do |thread|
-        Osbourne.logger.info { "Thread TID-#{thread.object_id.to_s(36)} #{thread['label']}" }
+        Osbourne.logger.info { "[Osbourne] Thread TID-#{thread.object_id.to_s(36)} #{thread['label']}" }
         if thread.backtrace
           Osbourne.logger.info { thread.backtrace.join("\n") }
         else
-          Osbourne.logger.info { "<no backtrace available>" }
+          Osbourne.logger.info { "[Osbourne] <no backtrace available>" }
         end
       end
     end
 
     def handle_signal(sig)
-      Osbourne.logger.debug "Got #{sig} signal"
+      Osbourne.logger.debug "[Osbourne] Got #{sig} signal"
 
       case sig
       when "USR1" then execute_soft_shutdown
       when "TTIN" then print_threads_backtrace
       when "TSTP" then execute_terminal_stop
       when "TERM", "INT"
-        Osbourne.logger.info { "Received #{sig}, will shutdown" }
+        Osbourne.logger.info { "[Osbourne] Received #{sig}, will shutdown" }
 
         raise Interrupt
       end

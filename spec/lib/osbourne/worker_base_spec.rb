@@ -16,6 +16,5 @@ RSpec.describe Osbourne::WorkerBase, type: :model do
 
   it { expect(test_worker.subscriptions).to be_a(Osbourne::Subscription) }
   it { expect(Osbourne::WorkerBase.descendants).to include WorkerBaseTestObject }
-  it { expect(test_worker.config[:queue_name]).to start_with Rails.env }
-  it { expect(test_worker.config[:topic_names].first).to start_with Rails.env }
+  it { expect(test_worker.queue.prefixed_name).to start_with Rails.env }
 end

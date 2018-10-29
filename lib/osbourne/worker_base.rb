@@ -53,12 +53,12 @@ module Osbourne
       def register_dead_letter_queue
         return unless config[:dead_letter]
 
-        Osbourne.logger.info "#{self.class.name} dead letter queue: arn: [#{dead_letter_queue.arn}], max retries: #{config[:max_retry_count]}" # rubocop:disable Metrics/LineLength
+        Osbourne.logger.info "[Osbourne] #{self.class.name} dead letter queue: arn: [#{dead_letter_queue.arn}], max retries: #{config[:max_retry_count]}" # rubocop:disable Metrics/LineLength
         queue.redrive(config[:max_retry_count], dead_letter_queue.arn)
       end
 
       def register
-        Osbourne.logger.info "#{self.class.name} subscriptions: Topics: [#{config[:topic_names].join(', ')}], Queue: [#{config[:queue_name]}]" # rubocop:disable Metrics/LineLength
+        Osbourne.logger.info "[Osbourne] #{self.class.name} subscriptions: Topics: [#{config[:topic_names].join(', ')}], Queue: [#{config[:queue_name]}]" # rubocop:disable Metrics/LineLength
         self.topics = config[:topic_names].map {|tn| Topic.new(tn) }
         self.queue = Queue.new(config[:queue_name])
         self.subscriptions = Subscription.new(topics, queue)
@@ -81,8 +81,8 @@ module Osbourne
                         dead_letter_queue: true,
                         max_retry_count: Osbourne.max_retry_count)
         self.config = {
-          topic_names:     Array(topics).map {|tp| Osbourne.prefixer(tp) },
-          queue_name:      Osbourne.prefixer(queue_name),
+          topic_names:     Array(topics),
+          queue_name:      queue_name,
           max_batch_size:  max_batch_size,
           max_wait:        max_wait,
           threads:         threads,

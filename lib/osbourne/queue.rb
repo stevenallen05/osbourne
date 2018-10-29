@@ -3,9 +3,10 @@
 module Osbourne
   class Queue
     include Services::SQS
-    attr_reader :name
+    attr_reader :name, :prefixed_name
     def initialize(name)
       @name = name
+      @prefixed_name = Osbourne.prefixer(@name)
       arn
     end
 
@@ -30,9 +31,9 @@ module Osbourne
     private
 
     def ensure_queue
-      Osbourne.logger.debug "Ensuring queue `#{name}` exists"
-      Osbourne.cache.fetch("osbourne_url_for_#{name}") do
-        sqs.create_queue(queue_name: name).queue_url
+      Osbourne.logger.debug "[Osbourne] Ensuring queue `#{@prefixed_name}` exists"
+      Osbourne.cache.fetch("osbourne_url_for_#{@prefixed_name}") do
+        sqs.create_queue(queue_name: @prefixed_name).queue_url
       end
     end
 

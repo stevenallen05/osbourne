@@ -7,8 +7,8 @@ module Osbourne
         Dir[File.expand_path("app/workers/**/*.rb")].each {|f| require f }
         return if Osbourne.test_mode?
 
-        Osbourne.logger.info "Workers found: #{Osbourne::WorkerBase.descendants.map(&:name).join(', ')}"
-        Osbourne.logger.info "Provisioning queues for all workers"
+        Osbourne.logger.info "[Osbourne] Workers found: #{Osbourne::WorkerBase.descendants.map(&:name).join(', ')}"
+        Osbourne.logger.info "[Osbourne] Provisioning queues for all workers"
         Osbourne::WorkerBase.descendants.each(&:provision)
       end
     end

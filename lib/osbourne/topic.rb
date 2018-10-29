@@ -19,7 +19,7 @@ module Osbourne
       parsed_message = parse(message)
       return if Osbourne.test_mode?
 
-      Osbourne.logger.info "[PUB] TOPIC: `#{prefixed_name}` MESSAGE: `#{parsed_message}`"
+      Osbourne.logger.info "[Osbourne] [PUB] TOPIC: `#{prefixed_name}` MESSAGE: `#{parsed_message}`"
       sns.publish(topic_arn: arn, message: parsed_message)
     end
 
@@ -28,7 +28,7 @@ module Osbourne
     def ensure_topic
       return if Osbourne.test_mode?
 
-      Osbourne.logger.debug "Ensuring topic `#{prefixed_name}` exists"
+      Osbourne.logger.debug "[Osbourne] Ensuring topic `#{prefixed_name}` exists"
       Osbourne.cache.fetch("osbourne_existing_topic_arn_for_#{prefixed_name}", ex: 1.minute) do
         sns.create_topic(name: prefixed_name).topic_arn
       end
