@@ -31,7 +31,7 @@ Rails/Exit:
 Metrics/LineLength:
   IgnoreCopDirectives: true
   Max: 120
-  IgnoredPatterns: ['^\s*#']
+  IgnoredPatterns: ['^\s*#', '^\s*Osbourne\.logger']
 
 # No space makes the method definition shorter and differentiates
 # from a regular assignment.

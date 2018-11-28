@@ -46,9 +46,11 @@ module Osbourne
       worker.polling_queue.poll(wait_time_seconds:      worker.config[:max_wait_time],
                                 max_number_of_messages: worker.config[:max_batch_size],
                                 skip_delete:            true) do |messages|
+        Osbourne.logger.debug("[Osbourne] Recieved #{messages.count} on #{worker.name}")
         messages.map do |msg|
           worker.polling_queue.delete_message(msg) if process(worker, Osbourne::Message.new(msg))
         end
+        Osbourne.logger.debug("[Osbourne] Waiting for more messages on #{worker.name} for max of #{worker.config[:max_wait_time]} seconds")
         throw :stop_polling if @stop
       end
     end

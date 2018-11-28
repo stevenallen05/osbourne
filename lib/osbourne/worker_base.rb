@@ -53,12 +53,12 @@ module Osbourne
       def register_dead_letter_queue
         return unless config[:dead_letter]
 
-        Osbourne.logger.info "[Osbourne] #{self.class.name} dead letter queue: arn: [#{dead_letter_queue.arn}], max retries: #{config[:max_retry_count]}" # rubocop:disable Metrics/LineLength
+        Osbourne.logger.info "[Osbourne] #{self.class.name} dead letter queue: arn: [#{dead_letter_queue.arn}], max retries: #{config[:max_retry_count]}"
         queue.redrive(config[:max_retry_count], dead_letter_queue.arn)
       end
 
       def register
-        Osbourne.logger.info "[Osbourne] #{self.class.name} subscriptions: Topics: [#{config[:topic_names].join(', ')}], Queue: [#{config[:queue_name]}]" # rubocop:disable Metrics/LineLength
+        Osbourne.logger.info "[Osbourne] #{self.class.name} subscriptions: Topics: [#{config[:topic_names].join(', ')}], Queue: [#{config[:queue_name]}]"
         self.topics = config[:topic_names].map {|tn| Topic.new(tn) }
         self.queue = Queue.new(config[:queue_name])
         self.subscriptions = Subscription.new(topics, queue)
