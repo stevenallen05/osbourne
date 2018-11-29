@@ -79,6 +79,7 @@ module Osbourne
                         threads: Osbourne.threads_per_worker,
                         queue_name: default_queue_name,
                         dead_letter_queue: true,
+                        idle_timeout: 600,
                         max_retry_count: Osbourne.max_retry_count)
         self.config = {
           topic_names:     Array(topics),
@@ -87,7 +88,8 @@ module Osbourne
           max_wait:        max_wait,
           threads:         threads,
           dead_letter:     dead_letter_queue,
-          max_retry_count: max_retry_count
+          max_retry_count: max_retry_count,
+          idle_timeout:    idle_timeout
         }
       end
       # rubocop:enable Metrics/ParameterLists

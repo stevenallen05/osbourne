@@ -30,7 +30,12 @@ module Osbourne
     def global_polling_threads
       Osbourne::WorkerBase.descendants.map do |worker|
         Osbourne.logger.debug("[Osbourne] Spawning thread for #{worker.name}")
-        Thread.new { poll(worker) }
+        Thread.new do
+          loop do
+            poll(worker)
+            break if @stop
+          end
+        end
       end
     end
 
@@ -45,28 +50,27 @@ module Osbourne
     def poll(worker)
       worker.polling_queue.poll(wait_time_seconds:      worker.config[:max_wait_time],
                                 max_number_of_messages: worker.config[:max_batch_size],
+                                idle_timeout:           worker.config[:idle_timeout],
                                 skip_delete:            true) do |messages|
         Osbourne.logger.debug("[Osbourne] Recieved #{messages.count} on #{worker.name}")
-        messages.map do |msg|
-          worker.polling_queue.delete_message(msg) if process(worker, Osbourne::Message.new(msg))
-        end
-        Osbourne.logger.debug("[Osbourne] Waiting for more messages on #{worker.name} for max of #{worker.config[:max_wait_time]} seconds")
+        Array(messages).each {|msg| process(worker, Osbourne::Message.new(msg)) }
         throw :stop_polling if @stop
+        Osbourne.logger.debug("[Osbourne] Waiting for more messages on #{worker.name} for max of #{worker.config[:max_wait_time]} seconds")
       end
     end
 
     private
 
-    def process(worker, message)
+    def process(worker, message) # rubocop:disable Metrics/AbcSize
       Osbourne.logger.info("[Osbourne] [MSG] Worker: #{worker.name} Valid: #{message.valid?} ID: #{message.id}")
       return false unless message.valid? && Osbourne.lock.soft_lock(message.id)
 
       Osbourne.cache.fetch(message.id, ex: 24.hours) do
         worker.new.process(message).tap {|_| Osbourne.lock.unlock(message.id) }
       end
+      worker.polling_queue.delete_message(message.message)
     rescue Exception => ex # rubocop:disable Lint/RescueException
       Osbourne.logger.error("[Osbourne] [MSG ID: #{message.id}] [#{ex.message}]\n #{ex.backtrace_locations.join("\n")}")
-      false
     end
   end
 end
