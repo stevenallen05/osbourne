@@ -3,7 +3,7 @@
 require "spec_helper"
 
 class TestWorker < Osbourne::WorkerBase
-  worker_config topics: %w[test_topic_1 test_topic_2]
+  worker_config topics: %w[test_topic_1 test_topic_2], max_wait: 10, max_batch_size: 1
 
   def process(_message)
     self.class.processed ||= 0
