@@ -29,7 +29,7 @@ module Osbourne
 
     def global_polling_threads
       Osbourne::WorkerBase.descendants.map do |worker|
-        Osbourne.logger.debug("[Osbourne] Spawning thread for #{worker.name}")
+        Osbourne.logger.info("[Osbourne] Spawning thread for #{worker.name}")
         Thread.new do
           loop do
             poll(worker)
@@ -48,15 +48,16 @@ module Osbourne
     end
 
     def poll(worker)
-      worker.polling_queue.poll(wait_time_seconds:      worker.config[:max_wait_time],
+      worker.polling_queue.poll(wait_time_seconds:      worker.config[:max_wait],
                                 max_number_of_messages: worker.config[:max_batch_size],
                                 idle_timeout:           worker.config[:idle_timeout],
                                 skip_delete:            true) do |messages|
-        Osbourne.logger.debug("[Osbourne] Recieved #{messages.count} on #{worker.name}")
+        Osbourne.logger.info("[Osbourne] Recieved #{messages.count} on #{worker.name}")
         Array(messages).each {|msg| process(worker, Osbourne::Message.new(msg)) }
         throw :stop_polling if @stop
-        Osbourne.logger.debug("[Osbourne] Waiting for more messages on #{worker.name} for max of #{worker.config[:max_wait_time]} seconds")
+        Osbourne.logger.info("[Osbourne] Waiting for more messages on #{worker.name} for max of #{worker.config[:max_wait]} seconds")
       end
+      Osbourne.logger.info("[Osbourne] Idle timeout on #{worker.name}")
     end
 
     private
@@ -71,6 +72,8 @@ module Osbourne
       worker.polling_queue.delete_message(message.message)
     rescue Exception => ex # rubocop:disable Lint/RescueException
       Osbourne.logger.error("[Osbourne] [MSG ID: #{message.id}] [#{ex.message}]\n #{ex.backtrace_locations.join("\n")}")
+    ensure
+      return # rubocop:disable Lint/EnsureReturn
     end
   end
 end
