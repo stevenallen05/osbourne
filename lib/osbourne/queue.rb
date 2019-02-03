@@ -21,7 +21,8 @@ module Osbourne
     def redrive(retries, dead_letter_arn)
       sqs.set_queue_attributes(queue_url:  url,
                                attributes: {
-                                 'RedrivePolicy': {
+                                 'ReceiveMessageWaitTimeSeconds': "20", # required for long polling to function
+                                 'RedrivePolicy':                 {
                                    'deadLetterTargetArn': dead_letter_arn,
                                    'maxReceiveCount':     retries
                                  }.to_json

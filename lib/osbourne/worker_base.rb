@@ -21,7 +21,7 @@ module Osbourne
     end
 
     def polling_queue
-      @polling_queue ||= self.class.polling_queue
+      self.class.polling_queue
     end
 
     class << self
