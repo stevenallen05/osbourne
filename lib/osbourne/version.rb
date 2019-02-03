@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module Osbourne
-  VERSION = "1.2.0.1"
+  VERSION = "1.2.1"
 end
