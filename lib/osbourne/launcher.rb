@@ -27,7 +27,7 @@ module Osbourne
       @threads.each {|thr| Thread.kill(thr) }
     end
 
-    def global_polling_threads
+    def restart_polling_threads
       Osbourne::WorkerBase.descendants.map do |worker|
         Osbourne.logger.info("[Osbourne] Spawning thread for #{worker.name}")
         Thread.new do
@@ -35,6 +35,16 @@ module Osbourne
             poll(worker)
             break if @stop
           end
+        end
+      end
+    end
+
+    def global_polling_threads
+      Thread.new do
+        loop do
+          polling_threads = restart_polling_threads
+          sleep(Osbourne.restart_seconds)
+          polling_threads.each(&:terminate)
         end
       end
     end

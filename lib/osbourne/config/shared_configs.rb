@@ -52,6 +52,10 @@ module Osbourne
       def prefix
         config.prefix ||= Rails.env
       end
+
+      def restart_seconds
+        config.restart_seconds ||= 1.hour.to_i
+      end
     end
   end
 end
