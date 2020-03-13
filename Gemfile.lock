@@ -94,7 +94,7 @@ GEM
     minitest (5.11.3)
     mock_redis (0.19.0)
     nenv (0.3.0)
-    nokogiri (1.10.2)
+    nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
